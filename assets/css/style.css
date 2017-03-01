@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+div#content {
+	width: 1170px;
+	margin: auto;
+}
+header {
+	box-sizing: border-box;
+}
+
+header > nav {
+	padding :10px 25px;
+	border: 1px solid black;
+	display: inline-block;
+	width: 100%;
+}
+
+header > nav > div#logo > a > img {
+	width : 40px;
+	height: 40px;
+}
+
+header > nav > div#logo {
+	float:left;
+}
+
+header > nav > div#logo > a {
+	display: inline-block;
+}
+
+
+header > nav > ul#left-side {
+	display: inline-block;
+	float:left;
+
+	
+	
+}
+
+header > nav > ul#left-side > li {
+	float: left;
+	margin-left: 1em;
+	
+}
+
+
+header > nav > ul#left-side > li > a {
+	font-size: 1.3em;
+	height : 40px;
+
+}
+
+
+
+nav > #right-side > li {
+	float: left;
+}
+
+nav > #right-side {
+	float: right;
+	margin-right: 30px;
+}
