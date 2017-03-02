@@ -35,7 +35,10 @@ header {
 	padding: 0.5em 0 0 2em;
 	float: left;
 }
-@media all and (max-width:1024px) {
+#heading a {
+	color: white;
+}
+@media all and (max-width:1150px) {
 	header {
 		width: 100%;
 		height: 5em;
@@ -62,12 +65,17 @@ header {
 	padding-right: 3em;
 	float: right;
 }
-#home, #about, #news, #contacts, #search {
-	width: 5em;
+#videos, #images, #gifs, #news, #register, #login, #contacts, #search {
+	width: 6em;
 }
-#mostPopular {
+/*@media all and (max-width:1024px) {
+	#videos, #images, #gifs, #news, #register, #login, #contacts, #search {
+		width: 16%;
+	}
+}*/
+/*#mostPopular {
 	width: 10em;
-}
+}*/
 #topperNav li {
 	margin-right: 1px;
 	margin-left: 1px;
@@ -108,13 +116,13 @@ header {
 .dropboxHover a:hover {
     color: #F73A4C; 
 }
-.about:hover .dropboxHover {
+.news:hover .dropboxHover {
     display: block;
 }
-#searchingForm {
+#searchingForm, #searchingForm2 {
 	display: none; 
 }
-@media all and (max-width:1024px) {
+@media all and (max-width:1150px) {
 	#topperNav {
 		width: 100%;
 		display: inline-block;
@@ -126,7 +134,7 @@ header {
 		margin: 0 auto;
 	}
 	#topperNav li {
-		width: 16%;
+		width: 12%;
 		margin-right: 1px;
 		margin-left: 1px;
 		text-align: center;
@@ -137,6 +145,35 @@ header {
 		width: 100%;
 		white-space: normal;
 		color: white;
+	}
+}
+
+@media all and (max-width:550px) {
+	header {
+		height: 6.5em;
+	}
+	#topperNav li {
+		width: 13%;
+	}
+	#search {
+		display: none;
+	}
+	#searchingForm2 {
+		display: block;
+		text-align: center;
+		margin-top: 0.3em;
+	}
+	#searchingForm2 input {
+		width: 80%;
+    	box-sizing: border-box;
+    	border: 2px solid #ccc;
+    	border-radius: 4px;
+    	font-size: 16px;
+    	background-color: white;
+    	background-image: url('../images/Lupe.png');
+    	background-position: 5px 4px; 
+    	background-repeat: no-repeat;
+    	padding: 5px 20px 5px 40px;
 	}
 }
 
@@ -237,6 +274,9 @@ header {
 	#topperNav {
 		display: none;
 	}
+	#searchingForm2 {
+		display: none;
+	}
 	#searchingForm {
 		display: block;
 		text-align: center;
@@ -249,7 +289,7 @@ header {
     	border-radius: 4px;
     	font-size: 16px;
     	background-color: white;
-    	background-image: url('./assets/images/Lupe.png');
+    	background-image: url('../images/Lupe.png');
     	background-position: 5px 4px; 
     	background-repeat: no-repeat;
     	padding: 5px 20px 5px 40px;
