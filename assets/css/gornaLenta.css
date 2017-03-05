@@ -41,7 +41,7 @@ header {
 @media all and (max-width:1150px) {
 	header {
 		width: 100%;
-		height: 5em;
+		height: 5.5em;
 		background-color: #1F2324;
 		box-sizing: content-box;
 	}
@@ -63,6 +63,7 @@ header {
 	color: white;
 	padding: 2.625em;
 	padding-right: 3em;
+	padding-bottom: 1em;
 	float: right;
 }
 #videos, #images, #gifs, #news, #register, #login, #contacts, #search {
@@ -122,6 +123,35 @@ header {
 #searchingForm, #searchingForm2 {
 	display: none; 
 }
+#profileNav {
+	display: inline;
+	list-style-type: none;
+	font-size: 1em;
+	color: white;
+	clear: both;
+	float: right;
+}
+#profileNav li {
+	display: inline-block;
+	float: left;
+}
+#profileNav li > a {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	white-space: nowrap;
+	color: white;
+}
+#profileNav li > a:link{
+	color: white;
+}
+#profileNav li > a:hover{
+	color: #F73A4C;
+}
+#profileNav li > a:active{
+	color: #F73A4C;
+	text-decoration: underline;
+}
 @media all and (max-width:1150px) {
 	#topperNav {
 		width: 100%;
@@ -146,11 +176,14 @@ header {
 		white-space: normal;
 		color: white;
 	}
+	#profileNav {
+		padding: 0.3em;
+	}
 }
 
 @media all and (max-width:550px) {
 	header {
-		height: 6.5em;
+		height: 7.5em;
 	}
 	#topperNav li {
 		width: 13%;
@@ -272,6 +305,9 @@ header {
     	animation-fill-mode: forwards;
 	} */
 	#topperNav {
+		display: none;
+	}
+	#profileNav {
 		display: none;
 	}
 	#searchingForm2 {

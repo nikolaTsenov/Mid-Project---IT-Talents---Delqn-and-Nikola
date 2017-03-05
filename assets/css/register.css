@@ -11,7 +11,7 @@ body{
   background:#b4b4b4;
 }
 
-#registration-form {
+#registration-form, #upload-form {
   font-family:'Open Sans Condensed', sans-serif;
 	width: 400px;
   min-width:250px;

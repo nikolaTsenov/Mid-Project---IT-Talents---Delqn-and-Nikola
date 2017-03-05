@@ -15,10 +15,10 @@ if(isset($_GET['page'])) {
 	}
 }else {
 	$page = 'homepage';
-	}
-	echo "<div id=\"page\">";
-	include ($page . '.php');
-	echo "</div>";
+}
+echo "<div id=\"page\">";
+include ($page . '.php');
+echo "</div>";
 
 
 

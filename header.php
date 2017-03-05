@@ -1,3 +1,18 @@
+<?php 
+function myErrorHandler($errNumber,$errMsg) {
+	if ($errNumber == E_WARNING || $errNumber == E_NOTICE) {
+		echo "<p id='warningNotice'>Sth went slightly out of the true path.</p>";
+		echo "<p id='warningNotice'>Continue with script.</p>";
+	}
+	if ($errNumber == E_ERROR || $errNumber == E_RECOVERABLE_ERROR) {
+		echo "<p id='fatalError'>Sth went terribly wrong.</p>";
+		echo "<p id='fatalError'>We will have to close. Sorry for the inconvenience!</p>";
+		fclose($handle);
+		die();
+	}
+}
+set_error_handler('myErrorHandler');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,10 +21,30 @@
 <meta http-equiv="author" name="Nikola Tsenov, Delqn Kolev" />
 <title>7cheers</title>
 <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./assets/css/upload.css" type="text/css" />
 <link rel="stylesheet" href="./assets/font-awesome-4.7.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="./assets/css/gornaLenta.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/register.css" type="text/css" />
 </head>
+<style>
+<?php 
+session_start();
+if (isset ( $_SESSION ['username'] )) {
+?>
+@media all and (max-width:1150px) {
+	#topperNav li {
+		width: 13.5%;
+	}
+}
+@media all and (max-width:550px) {
+	#topperNav li {
+		width: 15%;
+	}
+}
+<?php 
+}
+?>
+</style>
 <body>
 	<div id="wrapper">
 		<header id="header">
@@ -22,9 +57,33 @@
    						<a href="#mostPopular">IMAGES</a>
    						<a href="#news">GIFS</a>
    						<a href="#contact">NEWS</a>
-   						<a href="?page=register">Register</a>
+   						<?php 
+   						if (!isset ( $_SESSION ['username'] )) {
+   						?>
+   							<a href="?page=register">Register</a>
+   						<?php 
+   						}
+   						?>
+   						<?php 
+   						if (!isset ( $_SESSION ['username'] )) {
+   						?>
    						<a href="?page=login">Login</a>
+   						<?php 
+   						} else {
+   						?>
+   						<a href="?page=homepage">Login</a>
+   						<?php 
+   						}
+   						?>
    						<a href="#contact">CONTACTS</a>
+   						<a href="?page=upload"><i class="fa fa-upload"></i>Upload</a>
+   						<?php 
+   						if (isset ( $_SESSION ['username'] )) {
+   						?>
+   							<a href=""><?php echo $_SESSION ['username']; ?></a>
+   						<?php 
+   						}
+   						?>
   					</div>
 				</div>
 				<form id="searchingForm">
@@ -42,10 +101,36 @@
 							<a href="">Link 3</a>
 						</div>
 					</li>
-					<li id="register"><a href="?page=register">Register</a></li>
-					<li id="login"><a href="?page=login">Login</a></li>
+					<?php 
+   					if (!isset ( $_SESSION ['username'] )) {
+   					?>
+						<li id="register"><a href="?page=register">Register</a></li>
+					<?php 
+   					}
+					?>
+					<?php 
+   					if (!isset ( $_SESSION ['username'] )) {
+   					?>
+   						<li id="login"><a href="?page=login">Login</a></li>
+   					<?php 
+   					} else {
+   					?>
+   						<li id="login"><a href="?page=homepage">Login</a></li>
+   					<?php 
+   					}
+   					?>
 					<li id="contacts"><a href="">CONTACTS</a></li>
 					<li id="search"><a href=""><i class="fa fa-search"></i></a></li>
+				</ul>
+				<ul id="profileNav">
+					<li id="upload"><a href="?page=upload"><i class="fa fa-upload"></i>Upload</a></li>
+					<?php 
+   					if (isset ( $_SESSION ['username'] )) {
+   					?>
+						<li id="images"><a href=""><?php echo $_SESSION ['username']; ?></a></li>
+					<?php 
+   					}
+   					?>
 				</ul>
 				<form id="searchingForm2">
   					<input type="text" name="search" placeholder="Search..">

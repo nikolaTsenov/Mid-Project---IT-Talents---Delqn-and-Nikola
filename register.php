@@ -1,6 +1,6 @@
 <?php
 // da ne moje da se otvori linka direktno
-if(!isset($index)) {
+if(!$index) {
 	header('Location:/9gag/?page=register');
 	die();
 }
