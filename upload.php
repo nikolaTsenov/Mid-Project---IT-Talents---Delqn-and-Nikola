@@ -13,7 +13,7 @@ $fileSize = true; // flag - is this file the allowed size
 $emptyFile = false; // flag - is there any selected file
 // Is 'Upload' Pressed:
 if (isset ( $_POST ['submit'] )) {
-	//session_start ();
+	// session_start ();
 	// Has the session started:
 	if (! isset ( $_SESSION ['username'] )) {
 		$logged = false;
@@ -24,25 +24,34 @@ if (isset ( $_POST ['submit'] )) {
 			$fileOriginalName = $_FILES ['fileUpload'] ['name'];
 			$fileOriginalSize = $_FILES ['fileUpload'] ['size'];
 			$category = trim ( htmlentities ( $_POST ['fileCategory'] ) );
-			$imageFileType = pathinfo($fileOriginalName,PATHINFO_EXTENSION);
+			$imageFileType = pathinfo ( $fileOriginalName, PATHINFO_EXTENSION );
 			// Is there any file selected:
 			if (! empty ( $fileOnServerName )) {
-				$mimeType = mime_content_type ( $fileOnServerName );
-				$imageCheck = getimagesize($fileOnServerName);
-				// First check for MIME type:
-				if ($mimeType !== "image/jpeg" && $mimeType !== "image/png" && $mimeType !== "image/gif" && $mimeType !== "video/mp4") {
-					$uploadFile = false;
-				}
-				// Additional check for images:
-				if ($mimeType == "image/jpeg" || $mimeType == "image/png" || $mimeType == "image/gif") {
-					if ($imageCheck === false) {
+				$imageCheck = getimagesize ( $fileOnServerName );
+				if (function_exists ( 'mime_content_type' )) {
+					$mimeType = mime_content_type ( $fileOnServerName );
+					// First check for MIME type:
+					if ($mimeType !== "image/jpeg" && $mimeType !== "image/png" && $mimeType !== "image/gif" && $mimeType !== "video/mp4") {
 						$uploadFile = false;
+					}
+					// Additional check for images:
+					if ($mimeType == "image/jpeg" || $mimeType == "image/png" || $mimeType == "image/gif") {
+						if ($imageCheck === false) {
+							$uploadFile = false;
+						}
 					}
 				}
 				// Second check for MIME type - for extra security:
 				if ($imageFileType != "jpg" && $imageFileType != "gif" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "mp4") {
 					$uploadFile = false;
-					//echo $imageFileType;
+					// echo $imageFileType;
+				}
+				if (! function_exists ( 'mime_content_type' )) {
+					if ($imageFileType == "jpg" || $imageFileType == "gif" || $imageFileType == "jpeg" || $imageFileType == "png") {
+						if ($imageCheck === false) {
+							$uploadFile = false;
+						}
+					}
 				}
 				if ($fileOriginalSize > 8000000) {
 					$fileSize = false;
