@@ -1,18 +1,3 @@
-<?php 
-function myErrorHandler($errNumber,$errMsg) {
-	if ($errNumber == E_WARNING || $errNumber == E_NOTICE) {
-		echo "<p id='warningNotice'>Sth went slightly out of the true path.</p>";
-		echo "<p id='warningNotice'>Continue with script.</p>";
-	}
-	if ($errNumber == E_ERROR || $errNumber == E_RECOVERABLE_ERROR) {
-		echo "<p id='fatalError'>Sth went terribly wrong.</p>";
-		echo "<p id='fatalError'>We will have to close. Sorry for the inconvenience!</p>";
-		fclose($handle);
-		die();
-	}
-}
-set_error_handler('myErrorHandler');
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +13,6 @@ set_error_handler('myErrorHandler');
 </head>
 <style>
 <?php 
-session_start();
 if (isset ( $_SESSION ['username'] )) {
 ?>
 @media all and (max-width:1150px) {
@@ -137,6 +121,15 @@ if (isset ( $_SESSION ['username'] )) {
 				</form>
 			</header>	
 	</div>	
+	<div id="errors">
+		<?php 
+			$messages = getMessages();
+			foreach ($messages as $msg) {
+				echo $msg;
+				echo "<br/>";
+			}
+		?>
+	</div>
 	<script type="text/javascript">
 			/* When the user clicks on the button, 
 			toggle between hiding and showing the dropdown content */

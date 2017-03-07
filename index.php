@@ -1,9 +1,9 @@
 <?php
+session_start();
+include ('helpers.php');
+set_error_handler('myErrorHandler');
 // proverka dali minava prez index.php ili direktno vuvejda register.php
 $index = true;
-
-include ('header.php');
-
 
 
 if(isset($_GET['page'])) {
@@ -16,11 +16,17 @@ if(isset($_GET['page'])) {
 }else {
 	$page = 'homepage';
 }
-echo "<div id=\"page\">";
+
+
+ob_start();
 include ($page . '.php');
-echo "</div>";
+$content = ob_get_contents();
+ob_end_clean();
 
 
 
+include ('header.php');
+echo $content;
 include ('footer.php');
+clearMessages();
 ?>

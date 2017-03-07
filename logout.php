@@ -23,8 +23,6 @@ if (isset($_POST['username']) && (isset($_POST['password']))) {
 		for($index=0;count($user)>$index;$index++) {
 			if (($user[0] === $username) && ($user[1]) === md5($password)) {
 	
-				
-				session_start();
 				$_SESSION['username'] = $username;
 				$hasFound = true;
 				break;

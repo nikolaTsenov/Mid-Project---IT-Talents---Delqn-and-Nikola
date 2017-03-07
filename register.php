@@ -1,7 +1,7 @@
 <?php
 // da ne moje da se otvori linka direktno
 if(!$index) {
-	header('Location:/9gag/?page=register');
+	header('Location:index.php?page=register');
 	die();
 }
 
@@ -40,16 +40,16 @@ if(isset($_POST['submit'])){
 
 
 			if((file_exists("users/" . $username)) && (strlen($username) > 0)) {
- 				echo "That username is taken. Try another.";
+				setMessage("That username is taken. Try another.");
  				$used=true;
  			}
  			if($password !== $repeatPassword) {
- 				echo "These passwords don't match. Try again?" . "<br/>";
+ 				setMessage("These passwords don't match. Try again?");
  				$matchPassword=false;
  			} 
  			
  			if((strlen($username) < 6) || (strlen($password) < 6) || (strlen($repeatPassword) < 6))	 {
- 						echo "Please use between 6 and 30 characters.";
+ 						setMessage("Please use between 6 and 30 characters.");
  						$characters = false;
  					}
  		
