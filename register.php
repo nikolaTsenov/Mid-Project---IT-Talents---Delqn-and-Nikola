@@ -1,9 +1,21 @@
 <?php
-// da ne moje da se otvori linka direktno
 if(!$index) {
 	header('Location:index.php?page=register');
 	die();
 }
+
+// make JSON
+$names = file_get_contents('users/register.txt');
+$names = explode(PHP_EOL,$names);
+foreach ($names as $name) {
+	$name = explode('#',$name);
+	$jsonArray[] = array (
+		'username' => $name[0],
+		'password' => $name[1]
+	);
+}
+array_pop($jsonArray);
+$jsonArray = json_encode($jsonArray);
 
 ?>
 
@@ -14,15 +26,18 @@ if(!$index) {
 		<form action="?page=register" method="post" data-validate="parsley">
 			<div class='row'>
 				<label for='username'>Username</label>
-				<input type="text" placeholder="Username" name='username' id='username' data-required="true" data-error-message="Your username is required">
+				<input type="text" placeholder="Username" name='username' id='username' data-required="true" data-error-message="Your username is required" onblur="checkCharacters(this.value)">
+				<span id="usernameError" class ="error"></span>
 			</div>
 			<div class='row'>
 				<label for="password">Password</label>
-				<input type="password" placeholder="password"  name='password' data-required="true" data-type="password" data-error-message="Your password is required">
+				<input type="password" placeholder="password"  name='password' id="password" data-required="true" data-type="password" data-error-message="Your password is required" onblur="checkCharacters(this.value)">
+				<span id="passwordError" class ="error"></span>
 			</div>
 			<div class='row'>
 				<label for="repeatPassword">Confirm your password</label>
-				<input type="password" placeholder="Confirm your password" name='repeatPassword' data-required="true" data-error-message="Your confirm password is required">
+				<input type="password" placeholder="Confirm your password" name='repeatPassword' id = "repeatPassword" data-required="true" data-error-message="Your confirm password is required" onblur="validatePassword(this.value),checkCharacters(this.value)">
+				<span id="rePasswordError" class ="error"></span>
 			</div>
 			<div id="error">
 <?php 
@@ -71,7 +86,7 @@ if(isset($_POST['submit'])){
 }
  ?>
 			</div>
-			<input name = "submit" type="submit" value="Register">
+			<input name = "submit" id ="submit" type="submit" value="Register">
 		</form>
 	</div>
 </div>
@@ -87,4 +102,33 @@ $(document).ready(function(){
   placeholderSupport = placeholderIsSupported() ? 'placeholder' : 'no-placeholder';
   $('html').addClass(placeholderSupport);  
 });
+</script>
+
+<script type ="text/javascript" id="validation">
+
+
+function checkCharacters (characters) {
+	if((characters.length < 6) || (characters.length > 30)) {
+		document.getElementById('submit').disabled = true;
+		document.getElementById('rePasswordError').innerHTML = 'Please use between 6 and 30 characters.';
+	}else {
+		document.getElementById('submit').disabled = false;
+		document.getElementById('rePasswordError').innerHTML = '';
+	} 
+}
+
+function validatePassword(rePassword) {
+	var rePassword = document.getElementById('repeatPassword').value;
+	var password = document.getElementById('password').value;
+	
+	if (rePassword !== password) {
+		document.getElementById('rePasswordError').innerHTML = 'These passwords dont match. Try again?';
+		document.getElementById('submit').disabled = true;
+	} else {
+		document.getElementById('rePasswordError').innerHTML = "";
+		document.getElementById('submit').disabled = false;
+	}
+}
+
+
 </script>
