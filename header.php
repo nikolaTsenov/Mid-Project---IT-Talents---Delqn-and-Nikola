@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="./assets/font-awesome-4.7.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="./assets/css/gornaLenta.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/register.css" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <style>
 <?php 
