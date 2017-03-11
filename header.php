@@ -112,7 +112,7 @@ if (isset ( $_SESSION ['username'] )) {
 					<?php 
    					if (isset ( $_SESSION ['username'] )) {
    					?>
-						<li id="images"><a href=""><?php echo $_SESSION ['username']; ?></a></li>
+						<li id="images"><a href="?page=profile"><?php echo $_SESSION ['username']; ?></a></li>
 					<?php 
    					}
    					?>

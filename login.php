@@ -31,33 +31,10 @@ if (isset($_POST['username']) && (isset($_POST['password']))) {
 	}
 }
 if ($hasFound) {
-	header('Location:?loged.php');
+	header('Location:?page=loged');
 	die();
 }
 	
-// 	fclose($handle);
-
-// 	$hasFound = false;
-// 	foreach ($users as $user) {
-// 		if (($user[0] === $username) && ($user[1] === $password)) {
-// 			session_start();
-
-// 			$_SESSION['username'] = $username;
-// 			$_SESSION['alias'] = $user[2];
-// 			$hasFound = true;
-
-// 			break;
-// 		}
-// 	}
-
-// 	if ($hasFound) {
-// 		header('Location:mainatasi.php', true, 302);
-// 	} else {
-// 		header('Location:index.php?failed_login=true', true, 302);
-// 	}
-// } else {
-// 	header('Location:index.php?failed_login=true', true, 302);
-// }
 
 	?>
 
@@ -68,14 +45,16 @@ if ($hasFound) {
 		<form action="?page=login" method="post" data-validate="parsley">
 			<div class='row'>
 				<label for='username'>Username</label>
-				<input type="text" placeholder="Username" name='username' id='username' data-required="true" data-error-message="Your username is required">
+				<input type="text" placeholder="Username" name='username' id='username' onblur="checkUsernameCharacters(this.value)">
+				<span id = "usernameError" class ="error"></span>
 			</div>
 			<div class='row'>
 				<label for="password">Password</label>
-				<input type="password" placeholder="password"  name='password' data-required="true" data-type="password" data-error-message="Your password is required">
+				<input type="password" placeholder="password"  name='password'>
+				<span id = "passwordMessage" class ="error"><?php if((!$hasFound) && (isset($_POST['password']))){echo "Wrong password or username. Try again.";}?></span>
 			</div>
 	
-			<input name = "submit" type="submit" value="Login">
+			<input id ="submit" name = "submit" type="submit" value="Login">
 		</form>
 	</div>
 </div>
@@ -90,4 +69,7 @@ $(document).ready(function(){
   $('html').addClass(placeholderSupport);  
 });
 </script>
+<script type ="text/javascript" src="./assets/js/validation.js">
+</script>
+
 			

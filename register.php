@@ -44,7 +44,7 @@ if(isset($_POST['submit'])){
 			 		
 			 		
 			 		fclose($handle);
-						$_SESSION['username'] = $username; 
+						$_SESSION['username'] = $username;	 
 						header('Location:?loged.php');
 						die();
  			}
@@ -109,31 +109,8 @@ $(document).ready(function(){
 });
 </script>
 
-<script type ="text/javascript" id="validation">
+<script type ="text/javascript" src="./assets/js/validation.js">
 
-
-function checkCharacters (characters) {
-	if((characters.length < 6) || (characters.length > 30)) {
-		document.getElementById('submit').disabled = true;
-		document.getElementById('rePasswordError').innerHTML = 'Please use between 6 and 30 characters.';
-	}else {
-		document.getElementById('submit').disabled = false;
-		document.getElementById('rePasswordError').innerHTML = '';
-	} 
-}
-
-function validatePassword(rePassword) {
-	var rePassword = document.getElementById('repeatPassword').value;
-	var password = document.getElementById('password').value;
-	
-	if ((rePassword !== password) && (rePassword.length == password.length)){
-		document.getElementById('rePasswordError').innerHTML = 'These passwords dont match. Try again?';
-		document.getElementById('submit').disabled = true;
-	} else {
-		document.getElementById('rePasswordError').innerHTML = "";
-		document.getElementById('submit').disabled = false;
-	}
-}
 
 
 </script>
