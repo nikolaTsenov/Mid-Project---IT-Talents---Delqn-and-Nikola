@@ -122,7 +122,7 @@ if (isset ( $_SESSION ['username'] )) {
 				</form>
 			</header>	
 	</div>	
-	<div id="errors">
+	<div id="errors" style = "color:red;">
 		<?php 
 			$messages = getMessages();
 			foreach ($messages as $msg) {

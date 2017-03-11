@@ -32,6 +32,7 @@ if (isset($_POST['username']) && (isset($_POST['password']))) {
 }
 if ($hasFound) {
 	header('Location:?loged.php');
+	die();
 }
 	
 // 	fclose($handle);

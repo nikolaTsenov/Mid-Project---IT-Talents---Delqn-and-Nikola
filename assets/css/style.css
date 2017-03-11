@@ -60,6 +60,6 @@ nav > #right-side {
 	margin-right: 30px;
 }
 
-.error {
-	color:red;
+div#errors {
+	color: red;
 }
