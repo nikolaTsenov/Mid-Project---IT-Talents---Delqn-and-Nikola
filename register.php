@@ -55,6 +55,7 @@ if(isset($_POST['submit'])){
 // make JSON
 $names = file_get_contents('users/register.txt');
 $names = explode(PHP_EOL,$names);
+array_pop($names);
 foreach ($names as $name) {
 	$name = explode('#',$name);
 	$jsonArray[] = array (
@@ -62,7 +63,7 @@ foreach ($names as $name) {
 		'password' => $name[1]
 	);
 }
-array_pop($jsonArray);
+//array_pop($jsonArray);
 $jsonArray = json_encode($jsonArray);
 
 
