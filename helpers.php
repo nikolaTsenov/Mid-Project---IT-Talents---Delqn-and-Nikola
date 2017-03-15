@@ -15,10 +15,11 @@ function setMessage($msg){
 	$_SESSION['messages'] = $messages;
 }
 
-function getMessages() {
-	$messages = $_SESSION['messages'];
-	if(empty($messages)) {
-		return array();
+function getMessages() {	
+	if(empty($_SESSION['messages'])) {
+		$messages = array();
+	} else {
+		$messages = $_SESSION['messages'];
 	}
 	return $messages;
 }

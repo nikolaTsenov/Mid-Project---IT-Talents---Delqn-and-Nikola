@@ -2,10 +2,7 @@
 session_start();
 include ('helpers.php');
 set_error_handler('myErrorHandler');
-// proverka dali minava prez index.php ili direktno vuvejda register.php
 $index = true;
-
-
 if(isset($_GET['page'])) {
 
 	$page = $_GET['page'];

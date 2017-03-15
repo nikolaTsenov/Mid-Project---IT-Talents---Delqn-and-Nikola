@@ -31,7 +31,7 @@ if (isset($_POST['username']) && (isset($_POST['password']))) {
 	}
 }
 if ($hasFound) {
-	header('Location:?page=loged');
+	header('Location:?page=homepage');
 	die();
 }
 	
@@ -45,13 +45,13 @@ if ($hasFound) {
 		<form action="?page=login" method="post" data-validate="parsley">
 			<div class='row'>
 				<label for='username'>Username</label>
-				<input type="text" placeholder="Username" name='username' id='username' onblur="checkUsernameCharacters(this.value)">
+				<input type="text" placeholder="Username" name='username' id='username'">
 				<span id = "usernameError" class ="error"></span>
 			</div>
 			<div class='row'>
 				<label for="password">Password</label>
 				<input type="password" placeholder="password"  name='password'>
-				<span id = "passwordMessage" class ="error"><?php if((!$hasFound) && (isset($_POST['password']))){echo "Wrong password or username. Try again.";}?></span>
+				<span id = "password" class ="error"><?php if((!$hasFound) && (isset($_POST['password']))){echo "Wrong password or username. Try again.";}?></span>
 			</div>
 	
 			<input id ="submit" name = "submit" type="submit" value="Login">
@@ -69,7 +69,6 @@ $(document).ready(function(){
   $('html').addClass(placeholderSupport);  
 });
 </script>
-<script type ="text/javascript" src="./assets/js/validation.js">
-</script>
+
 
 			

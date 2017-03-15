@@ -63,7 +63,6 @@ foreach ($names as $name) {
 		'password' => $name[1]
 	);
 }
-//array_pop($jsonArray);
 $jsonArray = json_encode($jsonArray);
 
 
@@ -89,9 +88,6 @@ $jsonArray = json_encode($jsonArray);
 				<input type="password" placeholder="Confirm your password" name='repeatPassword' id = "repeatPassword" data-required="true" data-error-message="Your confirm password is required" onkeyup = "validatePassword(this.value)" onblur="checkCharacters(this.value)">
 				<span id="rePasswordError" class ="error"></span>
 			</div>
-<?php 
-
- ?>
 			<input name = "submit" id ="submit" type="submit" value="Register">
 		</form>
 	</div>
@@ -109,31 +105,4 @@ $(document).ready(function(){
   $('html').addClass(placeholderSupport);  
 });
 </script>
-
-<script type ="text/javascript" src="./assets/js/validation.js">
-
-
-
-</script>
-
-
-<script type ="text/javascript" id="usernameValidation">
-function checkUsername(username) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-		if(this.responseText.length > 2) {
-		  document.getElementById("rePasswordError").innerHTML = this.responseText;
-		  document.getElementById("username").style.border = "1px solid red";
-		  document.getElementById('submit').disabled = true;
-		} else {
-		  document.getElementById("username").style.border = "0px";
-		  document.getElementById('submit').disabled = false;
-		}
-    }
-  };
-  xhttp.open("GET", "http://localhost/9gag/usernames.php?username=" + username, true);
-  xhttp.send();
-}
-</script>
-
+<script type ="text/javascript" src="./assets/js/validation.js"></script>

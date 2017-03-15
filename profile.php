@@ -50,9 +50,6 @@ if(isset($_POST['submit'])){
 
 <link rel="stylesheet" href="./assets/css/profile.css" type="text/css" />
 <div id = "profileInformation">
-<h2><?= $username ?></h2>
-<a href="?page=logout"><input type="submit" value="Log out" /> </a>
-	
 </div>
 
 <div id="registration-form">
