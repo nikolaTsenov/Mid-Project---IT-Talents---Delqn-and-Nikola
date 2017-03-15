@@ -42,9 +42,8 @@ if(isset($_POST['submit'])){
 				file_put_contents($file_path,$current);
  			}
 }
-
-
-
+$path = "./users/" . $username . "/upload/profilePicture/profile.JPG";
+$profilePicture = is_file($path) ? "block" : "none";
 
 ?>
 
@@ -54,7 +53,12 @@ if(isset($_POST['submit'])){
 
 <div id="registration-form">
 	<div class='fieldset'>
-    <legend><?= $username ?></legend>
+
+    <legend>
+	    <div style="display:<?= $profilePicture?>">
+	    <img id = "profilePicture" src='./users/<?= $username ?>/upload/profilePicture/profile.jpg'/ style="height:80px;border-radius:50%;"/>
+	    </div>
+    <?= $username ?></legend>
 	<a href="?page=logout"><input type="submit" value="Logout" /> </a>
 		<form action="?page=profile" method="post">
 			<div class='row'>

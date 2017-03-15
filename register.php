@@ -37,6 +37,7 @@ if(isset($_POST['submit'])){
 			 		$handle = fopen('users/register.txt','a+');
 			 		mkdir("users/" . $username);
 			 		mkdir("users/" . $username . "/upload");
+			 		mkdir("users/" . $username . "/upload/profilePicture");
 			 		fwrite($handle, $username);
 			 		fwrite($handle,'#');
 			 		fwrite($handle,trim(md5($password)));
