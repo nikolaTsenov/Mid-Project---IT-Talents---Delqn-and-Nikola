@@ -37,6 +37,7 @@ function myErrorHandler($errNumber,$errMsg) {
 		echo "<p id='fatalError'>Sth went terribly wrong.</p>";
 		echo "<p id='fatalError'>We will have to close. Sorry for the inconvenience!</p>";
 		fclose($handle);
+		fclose($galleryHandle);
 		die();
 	}
 }

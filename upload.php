@@ -32,7 +32,7 @@ if (isset ( $_POST ['submit'] )) {
 			$category = trim ( htmlentities ( $_POST ['fileCategory'] ) );
 			$imageFileType = pathinfo ( $fileOriginalName, PATHINFO_EXTENSION );
 			// Is the title valid:
-			if (mb_strlen($fileTitle,"UTF-8") > 0 && mb_strlen($fileTitle,"UTF-8") <= 30) {
+			if (mb_strlen($fileTitle,"UTF-8") > 2 && mb_strlen($fileTitle,"UTF-8") <= 30) {
 				$validTitle = true;
 			}
 			// Is there any file selected:
@@ -78,8 +78,26 @@ if (isset ( $_POST ['submit'] )) {
 					if (! file_exists ( './users/' . $_SESSION ['username'] . '/upload/' . $category )) {
 						mkdir ( './users/' . $_SESSION ['username'] . '/upload/' . $category );
 					}
-					if (move_uploaded_file ( $fileOnServerName, './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileOriginalName )) {
+					$temporary = explode(".", $_FILES["fileUpload"]["name"]);
+					$newfilename = $fileTitle . '.' . end($temporary);
+					//move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
+					if (move_uploaded_file ( $fileOnServerName, './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $newfilename )) {
 						$checkSuccessfulUpload = true;
+						
+						$galleryHandle = fopen('users/gallery.txt','a+');
+						
+						fwrite($galleryHandle,$_SESSION ['username']);
+						fwrite($galleryHandle,'#');
+						fwrite($galleryHandle,$fileTitle);
+						fwrite($galleryHandle,'#');
+						fwrite($galleryHandle,$newfilename);
+						fwrite($galleryHandle,'#');
+						fwrite($galleryHandle,end($temporary));
+						fwrite($galleryHandle,'#');
+						fwrite($galleryHandle,$category);
+						fwrite($galleryHandle,PHP_EOL);
+						
+						fclose($galleryHandle);
 					} else {
 						$successfulUpload = false;
 					}
@@ -127,7 +145,7 @@ if (! isset ( $_SESSION ['username'] )) {
 				<br />
 			</div>
 			<p id="titleForFile">Add title:</p>
-			<input type="text" name="fileTitle" id="fileTitle" >
+			<input type="text" name="fileTitle" value="<?php echo $fileTitle; ?>" id="fileTitle" >
 			<p id="appendTitleWarning"></p>
 			<div class='row'>
 				<p id="categoryForFiles">Choose File Category:</p>
