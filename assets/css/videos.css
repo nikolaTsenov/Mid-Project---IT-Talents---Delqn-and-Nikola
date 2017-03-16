@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+#contentWrapper {
+	width: 100%;
+	height: auto;
+}
+#leftAside {
+	width: 15%;
+	height: 30em;
+	float: left;
+}
+#mainContent {
+	width: 70%;
+	height: auto;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	display: inline-block;
+}
+#rightAside {
+	width: 15%;
+	height: 30em;
+	float: right;
+}
+.poster {
+	border-bottom: 1px solid black;
+}
+.posterTitle {
+	text-align: center;
+	padding: 1em;
+}
+.posterContainer {
+	width: 50em;
+	height: auto;
+	margin: 0 auto;
+}
+.posterGraphic {
+	width: 100%;
+	max-height: 50em;
+}
