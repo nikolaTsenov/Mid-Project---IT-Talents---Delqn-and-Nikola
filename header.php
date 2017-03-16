@@ -6,6 +6,7 @@
 <meta http-equiv="author" name="Nikola Tsenov, Delqn Kolev" />
 <title>7cheers</title>
 <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./assets/css/videos.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/upload.css" type="text/css" />
 <link rel="stylesheet" href="./assets/font-awesome-4.7.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="./assets/css/gornaLenta.css" type="text/css" />
@@ -38,9 +39,9 @@ if (isset ( $_SESSION ['username'] )) {
 					<button onclick="dropdownFunction()" class="dropbtn"><!--  <p id="doIT">-->&#9776;<!-- &nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i></p>--></button>
 					<h2><a href="">Home </a></h2>
   					<div id="myDropdown" class="dropdown-content">
-   						<a href="#mostPopular">VIDEOS</a>
-   						<a href="#mostPopular">IMAGES</a>
-   						<a href="#news">GIFS</a>
+   						<a href="?page=videos">VIDEOS</a>
+   						<a href="?page=images">IMAGES</a>
+   						<a href="?page=gifs">GIFS</a>
    						<a href="#contact">NEWS</a>
    						<?php 
    						if (!isset ( $_SESSION ['username'] )) {
@@ -76,9 +77,9 @@ if (isset ( $_SESSION ['username'] )) {
 				</form>
 				<h1 id="heading"><a href="?page=homepage"><img src="./assets/images/logo7.png" alt="logo7" />cheers</a></h1>
 				<ul id="topperNav">
-					<li id="videos"><a href="">VIDEOS</a></li>
-					<li id="images"><a href="">IMAGES</a></li>
-					<li id="gifs"><a href="">GIFS</a></li>
+					<li id="videos"><a href="?page=videos">VIDEOS</a></li>
+					<li id="images"><a href="?page=images">IMAGES</a></li>
+					<li id="gifs"><a href="?page=gifs">GIFS</a></li>
 					<li class="news"><a href="">NEWS</a>
 						<div class="dropboxHover">
 							<a href="">Link 1</a>
