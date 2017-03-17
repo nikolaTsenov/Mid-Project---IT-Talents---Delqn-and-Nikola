@@ -22,6 +22,8 @@
 	float: right;
 }
 .poster {
+	width: 98.5%;
+	margin: 0 auto;
 	border-bottom: 1px solid black;
 }
 .posterTitle {
@@ -29,11 +31,38 @@
 	padding: 1em;
 }
 .posterContainer {
-	width: 50em;
+	max-width: 100%;
 	height: auto;
 	margin: 0 auto;
 }
 .posterGraphic {
-	width: 100%;
-	max-height: 50em;
+	max-width: 100%;
+	min-width: 80%;
+	display: block;
+	margin: 0 auto;
+	max-height: 30em;
+	background-color: lightGrey;
+	/*object-fit: fill;*/
+}
+.like, .dislike {
+	width: 3em;
+	height: 3em;
+	font-size: 1em;
+	background-color: Transparent;
+    background-repeat: no-repeat;
+	cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+.like {
+	color: green;
+	border: 1px solid green;
+}
+.dislike {
+	color: red;
+	border: 1px solid red;
+}
+.like:hover, .dislike:hover, .like:active, .like:hover {
+	font-weight: bold;
+	font-size: 1.2em;
 }
