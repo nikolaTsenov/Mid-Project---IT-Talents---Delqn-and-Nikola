@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 body {
 	background-color: #efeeed;
+	font-family: 'Open Sans', sans-serif;
 }
 img {
 	width: 5em;
@@ -24,4 +25,22 @@ table th {
 }
 table td {
 	color: #e58134;
+}
+input[type=submit] {
+	width: 3em;
+	height: 3em;
+	font-size: 1em;
+	background-color: Transparent;
+    background-repeat: no-repeat;
+	cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    border: 1px solid #e58134;
+    border-radius: 30%;
+    color: #e58134;
+}
+input[type=submit]:hover, input[type=submit]:active {
+	font-weight: bold;
+	width: 3.2em;
+	height: 3.2em;
 }

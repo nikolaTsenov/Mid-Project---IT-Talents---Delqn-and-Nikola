@@ -8,6 +8,8 @@
 	<meta charset="UTF-8" />
 	<title>List of users</title>
 	<link rel="stylesheet" href="./assets/css/style.css" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<script src="./assets/js/script.js" ></script>
 </head>
 <body>
 	<a href="./addUser.php"><input type="submit" value="Add"/> </a>
@@ -35,19 +37,21 @@
 		                echo "<th>Delete from list</th>";
 		            echo "</tr>";
 		        while($row = mysqli_fetch_array($result)){
-		            echo "<tr>";
+		            echo "<tr class='". $row['id'] . "' >";
 		                echo "<td>" . "<img src=" . $row['path'] . " alt='Profile Pic' />" . "</td>";
 		                echo "<td>" . $row['name'] . "</td>";
 		                echo "<td>" . $row['emaill'] . "</td>";
 		                echo "<td>" . $row['years'] . "</td>";
 		                echo "<td>" . $row['status'] . "</td>";
-		                echo "<td>" . "<button id='". $row['id'] . "'" . " class='delete' >Remove</button>" . "</td>";
+		                echo "<td>" . "<button id='". $row['id'] . "'" . " class='delete' type='button' onclick='deleteUser(this.id)' >Remove</button>" . "</td>";
 		            echo "</tr>";
 		        }
 		        echo "</table>";
 		        // Free result set
 		        mysqli_free_result($result);
 		    } else{
+		    	echo "<br />";
+		    	echo "<br />";
 		        echo "No records matching your query were found.";
 		    }
 		} else{
@@ -57,5 +61,6 @@
 		// Close connection
 		mysqli_close($link);
 	?>
+	
 </body>
 </html>

@@ -165,3 +165,36 @@ if (isset ( $_POST ["submit"] )) {
 // }
 // echo "Connected successfully";
 ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Upload</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<style>
+		body {
+			background-color: #efeeed;
+			font-family: 'Open Sans', sans-serif;
+			font-size: 1em;
+		}
+		a {
+			text-decoration: none;
+			color: #4286f4;
+			padding: 0.3em;
+			border: 1px solid #4286f4;
+			border-radius: 30%;
+		}
+		a:hover, a:active {
+			padding: 0.5em;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<br />
+	<br />
+	<br />
+	<a href="./index.php" id="backBut" >Go to main page</a>
+</body>
+</html>
+
