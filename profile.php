@@ -47,7 +47,6 @@ $profilePicture = is_file($path) ? "block" : "none";
 
 ?>
 
-<link rel="stylesheet" href="./assets/css/profile.css" type="text/css" />
 <div id = "profileInformation">
 </div>
 
@@ -56,10 +55,10 @@ $profilePicture = is_file($path) ? "block" : "none";
 
     <legend>
 	    <div style="display:<?= $profilePicture?>">
-	    <img id = "profilePicture" src='./users/<?= $username ?>/upload/profilePicture/profile.jpg'/ style="height:80px;border-radius:50%;"/>
+	    <img id = "profilePicture" src='./users/<?= $username ?>/upload/profilePicture/profile.jpg'/ />
 	    </div>
     <?= $username ?></legend>
-	<a href="?page=logout"><input type="submit" value="Logout" /> </a>
+	<a  href="?page=logout"><input id="logoutButton" type="submit" value="Logout" /> </a>
 		<form action="?page=profile" method="post">
 			<div class='row'>
 				<label for="password">New Password</label>

@@ -186,3 +186,11 @@ margin-top:-5px;
 div#error {
 	color: red;
 }
+#profilePicture {
+	height:80px;
+	border-radius:50%;
+}
+
+#logoutButton {
+	color:red;
+}
