@@ -41,7 +41,7 @@
 		                echo "<td>" . $row['emaill'] . "</td>";
 		                echo "<td>" . $row['years'] . "</td>";
 		                echo "<td>" . $row['status'] . "</td>";
-		                echo "<td>" . "<button id='delete' >Remove</button>" . "</td>";
+		                echo "<td>" . "<button id='". $row['id'] . "'" . " class='delete' >Remove</button>" . "</td>";
 		            echo "</tr>";
 		        }
 		        echo "</table>";
