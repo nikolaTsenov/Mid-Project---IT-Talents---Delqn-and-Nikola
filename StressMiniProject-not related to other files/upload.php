@@ -6,6 +6,7 @@ if (isset ( $_POST ["submit"] )) {
 	$age = trim ( htmlentities ( $_POST ['age'] ) );
 	$relationShip = trim ( htmlentities ( $_POST ['relationshipStatus'] ) );
 	$checkUpload = false;
+	echo $email;
 	// email validation
 	if (! filter_var ( $email, FILTER_VALIDATE_EMAIL )) {
 		$checkEmail = false;
@@ -94,6 +95,8 @@ if (isset ( $_POST ["submit"] )) {
 			$username = "root";
 			$password = "";
 			
+			//$email = mysql_real_escape_string($email);
+			
 			// Create connection
 			$conn = mysqli_connect ( $servername, $username, $password );
 			// Check connection
@@ -105,14 +108,14 @@ if (isset ( $_POST ["submit"] )) {
 // 			if (mysql_select_db ( 'users', $conn )) {
 // 				echo "databse exists";
 // 			} else {
-				$sql = "CREATE SCHEMA `users`";
+				$sql = "CREATE DATABASE IF NOT EXISTS users";
 				
 				if (mysqli_query ( $conn, $sql )) {
 					echo "Database created successfully";
 				} else {
 					echo "Error creating database: " . mysqli_error ( $conn );
 				}
-				$sql = "CREATE TABLE `users`.`people` (
+				$sql = "CREATE TABLE IF NOT EXISTS users.people (
 					  `id` INT NOT NULL AUTO_INCREMENT,
 					  `name` VARCHAR(45) NOT NULL,
 					  `emaill` VARCHAR(45) NOT NULL,
@@ -128,8 +131,14 @@ if (isset ( $_POST ["submit"] )) {
 					echo "Error creating TABLE: " . mysqli_error ( $conn );
 				}
 				
-				$sql = "INSERT INTO users.people (name, email, years, status, picturePath)
-VALUES ($name, $email, $age, $relationShip, $path)";
+				// Escape user inputs for security
+				$name = mysqli_real_escape_string($conn, $_REQUEST['name']);
+				$email = mysqli_real_escape_string($conn, $_REQUEST['email']);
+				$age = mysqli_real_escape_string($conn, $_REQUEST['age']);
+				$relationShip = mysqli_real_escape_string($conn, $_REQUEST['relationshipStatus']);
+				
+				$sql = "INSERT INTO users.people (name, emaill, years, status, path)
+				VALUES ('$name', '$email', '$age', '$relationShip', '$path')";
 				if (mysqli_query ( $conn, $sql )) {
 					echo "Row insert successfully";
 				} else {
@@ -156,44 +165,3 @@ VALUES ($name, $email, $age, $relationShip, $path)";
 // }
 // echo "Connected successfully";
 ?>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
