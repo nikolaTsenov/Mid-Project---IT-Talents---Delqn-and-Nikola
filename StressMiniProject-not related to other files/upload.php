@@ -4,38 +4,42 @@ if (isset ( $_POST ["submit"] )) {
 	$name = trim ( htmlentities ( $_POST ['name'] ) );
 	$email = trim ( htmlentities ( $_POST ["email"] ) );
 	$age = trim ( htmlentities ( $_POST ['age'] ) );
-	
-	$matchPassword = true;
-	$characters = true;
-	$used = false;
-	
+	$relationShip = trim ( htmlentities ( $_POST ['relationshipStatus'] ) );
+	$checkUpload = false;
 	// email validation
 	if (! filter_var ( $email, FILTER_VALIDATE_EMAIL )) {
-		$email = false;
+		$checkEmail = false;
 		echo "Invalid email format";
 	} else {
-		$email = true;
+		$checkEmail = true;
 	}
 	
-	// name validation
 	if (! preg_match ( "/^[a-zA-Z ]*$/", $name )) {
-		$name = false;
+		$checkName = false;
 		echo "Only letters and white space allowed in Name";
 	} else {
-		$name = true;
+		$checkName = true;
 	}
 	
 	// age validation
 	if ($age < 6 || $age > 80) {
-		$age = false;
+		$checkAge = false;
 		echo "Invalid age";
 	} else {
-		$age = true;
+		$checkAge = true;
+	}
+	
+	// relationship validation
+	if (($_POST ['relationshipStatus'] === "single") || ($_POST ['relationshipStatus'] === "married")) {
+		$checkRelationShip = true;
+	} else {
+		$checkRelationShip = false;
 	}
 	
 	// UPLOAD
 	$target_dir = "uploads/";
 	$target_file = $target_dir . basename ( $_FILES ["fileToUpload"] ["name"] );
+	$path = $target_file;
 	$uploadOk = 1;
 	$imageFileType = pathinfo ( $target_file, PATHINFO_EXTENSION );
 	// Check if image file is a actual image or fake image
@@ -68,11 +72,12 @@ if (isset ( $_POST ["submit"] )) {
 			// Check if $uploadOk is set to 0 by an error
 			if ($uploadOk == 0) {
 				echo "Sorry, your file was not uploaded.";
+				
 				// if everything is ok, try to upload file
-			} elseif (($email === true) && ($name === true) && ($age === true)) {
+			} elseif (($checkEmail === true) && ($checkName === true) && ($checkAge === true) && ($checkRelationShip === true)) {
 				if (move_uploaded_file ( $_FILES ["fileToUpload"] ["tmp_name"], $target_file )) {
 					echo "The file " . basename ( $_FILES ["fileToUpload"] ["name"] ) . " has been uploaded.";
-					$upload = true;
+					$checkUpload = true;
 				} else {
 					echo "Sorry, there was an error uploading your file.";
 				}
@@ -81,11 +86,62 @@ if (isset ( $_POST ["submit"] )) {
 			echo "You have to choose file for upload";
 		}
 		
-		if (($email === true) && ($name === true) && ($age === true) && ($upload === true)) {
-			echo "Success!";
+		// name validation
+		$null = null;
+		if (($checkEmail === true) && ($checkName === true) && ($checkAge === true) && ($checkUpload === true) && ($checkRelationShip === true)) {
+			
+			$servername = "localhost";
+			$username = "root";
+			$password = "";
+			
+			// Create connection
+			$conn = mysqli_connect ( $servername, $username, $password );
+			// Check connection
+			if (! $conn) {
+				die ( "Connection failed: " . mysqli_connect_error () );
+			}
+			
+			//Create database
+// 			if (mysql_select_db ( 'users', $conn )) {
+// 				echo "databse exists";
+// 			} else {
+				$sql = "CREATE SCHEMA `users`";
+				
+				if (mysqli_query ( $conn, $sql )) {
+					echo "Database created successfully";
+				} else {
+					echo "Error creating database: " . mysqli_error ( $conn );
+				}
+				$sql = "CREATE TABLE `users`.`people` (
+					  `id` INT NOT NULL AUTO_INCREMENT,
+					  `name` VARCHAR(45) NOT NULL,
+					  `emaill` VARCHAR(45) NOT NULL,
+					  `years` INT NOT NULL,
+					  `status` VARCHAR(10) NOT NULL,
+					  `path` VARCHAR(400) NOT NULL,
+					  PRIMARY KEY (`id`),
+					  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+					  UNIQUE INDEX `emaill_UNIQUE` (`emaill` ASC))";
+				if (mysqli_query ( $conn, $sql )) {
+					echo "TABLE created successfully";
+				} else {
+					echo "Error creating TABLE: " . mysqli_error ( $conn );
+				}
+				
+				$sql = "INSERT INTO users.people (name, email, years, status, picturePath)
+VALUES ($name, $email, $age, $relationShip, $path)";
+				if (mysqli_query ( $conn, $sql )) {
+					echo "Row insert successfully";
+				} else {
+					echo "Error insert the row " . mysqli_error ( $conn );
+				}
+				
+				mysqli_close ( $conn );
+			}
 		}
 	}
-}
+
+
 // database connection
 // $servername = "localhost:8080";
 // $username = "root";
