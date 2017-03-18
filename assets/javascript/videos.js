@@ -11,27 +11,47 @@ function gallery () {
 			output.className = "posters";
 			output.innerHTML = "";
 			
-			var balkanCat = document.getElementById('balkan');
-			var engHumCat = document.getElementById('engHum');
-			var memes = document.getElementById('memes');
-			var awkward = document.getElementById('awkward');
-			var blackHum = document.getElementById('blackHum');
-			
-			var posterArr = new Array();
-			
 			for (var index=0; index < data.length; index++) {
 				var posts = data[index];
 				if (posts.fileExtension == "mp4") {
+					
+					var cat;
+					
+					if (posts.category == "balkan") {
+						cat = "Balkan Humour";
+					}
+					if (posts.category == "engHum") {
+						cat = "English Humour";
+					}
+					if (posts.category == "memes") {
+						cat = "Memes";
+					}
+					if (posts.category == "awkaward") {
+						cat = "Awkward";
+					}
+					if (posts.category == "blackHum") {
+						cat = "Dark Humour";
+					}
+					
 					var poster = document.createElement('div');
 					poster.className = "poster"+posts.category;
-					poster.width = "100%";
-					poster.height = "auto";
+					poster.style.width = "98.5%";
+					poster.style.height = "auto";
+					poster.style.margin = "0 auto";
+					poster.style.marginBottom = "1em";
+					poster.style.paddingBottom = "1em";
+					poster.style.borderBottom = "thin solid #FFFAF0";
 					output.appendChild(poster);
 					
 					var posterTitle = document.createElement('h4');
 					posterTitle.className = "posterTitle";
 					posterTitle.innerHTML = posts.title;
 					poster.appendChild(posterTitle);
+					
+					var posterSubTitle = document.createElement('h6');
+					posterSubTitle.className = "posterSubTitle";
+					posterSubTitle.innerHTML = "Category: "+cat;
+					poster.appendChild(posterSubTitle);
 					
 					var posterContainer = document.createElement('div');
 					posterContainer.className = "posterContainer";
@@ -61,26 +81,33 @@ function gallery () {
 					like.innerHTML = "<i class='fa fa-thumbs-up' aria-hidden='true'></i>";
 					posterLike.appendChild(like);
 					
+					var countLikes = document.createElement('p');
+					countLikes.className = "countLikes";
+					countLikes.innerHTML = "0";
+					countLikes.style.display = "inline-block";
+					posterLike.appendChild(countLikes);
+					
 					var dislike = document.createElement('button');
 					dislike.className = "dislike";
 					dislike.innerHTML = "<i class='fa fa-thumbs-down' aria-hidden='true'></i>";
 					posterDislike.appendChild(dislike);
 					
-					posterArr.push(poster);
+					var countDislikes = document.createElement('p');
+					countDislikes.className = "countDislikes";
+					countDislikes.innerHTML = "0";
+					countDislikes.style.display = "inline-block";
+					posterDislike.appendChild(countDislikes);
 
 				}
 			}
 			var result = document.getElementById('result');
 			result.appendChild(output);
-			//for (var index=0; index < posterArr.length; index++) {
-				//posterArr[index].style.display = "none";
-			//}
 		}
 	}
 	
-	xhttp.open("GET","./videosService.php",true);
-	
-	xhttp.send(null);	
+	xhttp.open("POST","./videosService.php",true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send();	
 }
 
 var category = document.getElementsByClassName('category');

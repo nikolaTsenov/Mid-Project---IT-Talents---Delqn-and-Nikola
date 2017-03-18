@@ -1,6 +1,6 @@
 <?php
 
-if ($_SERVER ['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 	$data = file_get_contents ( "./users/gallery.txt" );
 	$postersArr = explode ( PHP_EOL, $data );
 	array_pop ( $postersArr );
@@ -16,7 +16,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'GET') {
 		);
 	}
 
-	echo json_encode ( $postersArr );
+	echo json_encode($postersArr);
 }
 
 ?>

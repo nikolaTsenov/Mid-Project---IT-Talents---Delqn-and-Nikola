@@ -12,8 +12,8 @@
 #mainContent {
 	width: 70%;
 	height: auto;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
+	/*border-left: 1px solid black;
+	border-right: 1px solid black;*/
 	display: inline-block;
 }
 #rightAside {
@@ -21,14 +21,20 @@
 	height: 30em;
 	float: right;
 }
+/*  .poster deos not exist, I have kept it here, just to know its params 
 .poster {
 	width: 98.5%;
 	margin: 0 auto;
-	border-bottom: 1px solid black;
-}
+	margin-bottom: 1em;
+} */
 .posterTitle {
 	text-align: center;
 	padding: 1em;
+}
+.posterSubTitle {
+	text-align: center;
+	padding: 0.5em;
+	padding-top: 0em;
 }
 .posterContainer {
 	max-width: 100%;
@@ -44,9 +50,28 @@
 	background-color: lightGrey;
 	/*object-fit: fill;*/
 }
+.posterReactions {
+	width: 35%;
+	margin: 0 auto;
+	text-align: center;
+}
+@media all and (max-width:1000px) {
+	.posterReactions {
+		text-align: initial;
+	}
+}
+.posterLike {
+	float: left;
+	padding: 0.3em;
+}
+.posterDislike {
+	padding: 0.3em;
+	display: inline-block;
+}
 .like, .dislike {
 	width: 3em;
 	height: 3em;
+	display: inline-block;
 	font-size: 1em;
 	background-color: Transparent;
     background-repeat: no-repeat;
@@ -57,12 +82,23 @@
 .like {
 	color: green;
 	border: 1px solid green;
+	border-radius: 50%;
 }
 .dislike {
 	color: red;
 	border: 1px solid red;
+	border-radius: 50%;
 }
 .like:hover, .dislike:hover, .like:active, .like:hover {
 	font-weight: bold;
 	font-size: 1.2em;
+}
+.countLikes, .countDislikes {
+	padding-left: 1em;
+}
+.countLikes {
+	color: darkGreen;
+}
+.countDislikes {
+	color: darkRed;
 }
