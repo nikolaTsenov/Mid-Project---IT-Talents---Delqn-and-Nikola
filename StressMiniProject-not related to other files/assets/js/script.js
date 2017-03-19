@@ -1,4 +1,3 @@
-
 function deleteUser(str) {
     if (str == "") {
         return;

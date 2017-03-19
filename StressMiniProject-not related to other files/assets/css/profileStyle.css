@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+body {
+	background-color: #efeeed;
+	font-family: 'Open Sans', sans-serif;
+	display:inline-block;
+}
+img {
+	max-width: 14em;
+	max-height: 200px;
+}
+table {
+	border-collapse: collapse;
+	margin: 1em;
+}
+table tr {
+	text-align: left;
+	verical-align: center;
+}
+table tr {
+	padding: 0.2em;
+	word-wrap: break-word;
+}
+table th {
+	color: #4286f4;
+}
+table td {
+	color: #e58134;
+}
+div#imgDiv {
+	display:inline-block;
+	float:left;
+	margin-right: 3em;
+}
+table > tbody > tr {
+	height: 2.55em;
+}

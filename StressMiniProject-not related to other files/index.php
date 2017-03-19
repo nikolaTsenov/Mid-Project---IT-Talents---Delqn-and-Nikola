@@ -1,7 +1,3 @@
-<?php 
-
-?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,13 +33,14 @@
 		                echo "<th>Delete from list</th>";
 		            echo "</tr>";
 		        while($row = mysqli_fetch_array($result)){
+		        	$path = $row['path'];
 		            echo "<tr class='". $row['id'] . "' >";
-		                echo "<td>" . "<img src=" . $row['path'] . " alt='Profile Pic' />" . "</td>";
+		                echo "<td>" . "<a href=\"contactUser.php?id=$row[id]\" >" . "<img src=" . $path	. " alt='Profile Pic' />" . "<a/>" . "</td>";
 		                echo "<td>" . $row['name'] . "</td>";
 		                echo "<td>" . $row['emaill'] . "</td>";
 		                echo "<td>" . $row['years'] . "</td>";
 		                echo "<td>" . $row['status'] . "</td>";
-		                echo "<td>" . "<button id='". $row['id'] . "'" . " class='delete' type='button' onclick='deleteUser(this.id)' >Remove</button>" . "</td>";
+		                echo "<td>" . "<button name='". $row['path'] . "' . id='". $row['id'] . "'" . " class='delete' type='button' onclick='deleteUser(this.id)' >Remove</button>" . "</td>";
 		            echo "</tr>";
 		        }
 		        echo "</table>";

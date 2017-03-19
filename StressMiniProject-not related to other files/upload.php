@@ -6,11 +6,11 @@ if (isset ( $_POST ["submit"] )) {
 	$age = trim ( htmlentities ( $_POST ['age'] ) );
 	$relationShip = trim ( htmlentities ( $_POST ['relationshipStatus'] ) );
 	$checkUpload = false;
-	echo $email;
 	// email validation
 	if (! filter_var ( $email, FILTER_VALIDATE_EMAIL )) {
 		$checkEmail = false;
 		echo "Invalid email format";
+		echo "<br/>";
 	} else {
 		$checkEmail = true;
 	}
@@ -18,6 +18,7 @@ if (isset ( $_POST ["submit"] )) {
 	if (! preg_match ( "/^[a-zA-Z ]*$/", $name )) {
 		$checkName = false;
 		echo "Only letters and white space allowed in Name";
+		echo "<br/>";
 	} else {
 		$checkName = true;
 	}
@@ -26,6 +27,7 @@ if (isset ( $_POST ["submit"] )) {
 	if ($age < 6 || $age > 80) {
 		$checkAge = false;
 		echo "Invalid age";
+		echo "<br/>";
 	} else {
 		$checkAge = true;
 	}
@@ -49,42 +51,51 @@ if (isset ( $_POST ["submit"] )) {
 			$check = getimagesize ( $_FILES ["fileToUpload"] ["tmp_name"] );
 			if ($check !== false) {
 				echo "File is an image - " . $check ["mime"] . ".";
+				echo "<br/>";
 				$uploadOk = 1;
 			} else {
 				echo "File is not an image.";
+				echo "<br/>";
 				$uploadOk = 0;
 			}
 			
 			// Check if file already exists
 			if (file_exists ( $target_file )) {
 				echo "Sorry, file already exists.";
+				echo "<br/>";
 				$uploadOk = 0;
 			}
 			// Check file size
 			if ($_FILES ["fileToUpload"] ["size"] > 5000000) {
 				echo "Sorry, your file is too large.";
+				echo "<br/>";
 				$uploadOk = 0;
 			}
 			// Allow certain file formats
 			if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "PNG" && $imageFileType != "jpeg" && $imageFileType != "JPEG" && $imageFileType != "gif" && $imageFileType != "GIF") {
 				echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+				echo "<br/>";
 				$uploadOk = 0;
 			}
 			// Check if $uploadOk is set to 0 by an error
 			if ($uploadOk == 0) {
 				echo "Sorry, your file was not uploaded.";
+				echo "<br/>";
 				
 				// if everything is ok, try to upload file
 			} elseif (($checkEmail === true) && ($checkName === true) && ($checkAge === true) && ($checkRelationShip === true)) {
 				if (move_uploaded_file ( $_FILES ["fileToUpload"] ["tmp_name"], $target_file )) {
 					echo "The file " . basename ( $_FILES ["fileToUpload"] ["name"] ) . " has been uploaded.";
+					echo "<br/>";
 					$checkUpload = true;
 				} else {
 					echo "Sorry, there was an error uploading your file.";
+					echo "<br/>";
 				}
 			}
 		} else {
 			echo "You have to choose file for upload";
+			echo "<br/>";
 		}
 		
 		// name validation
@@ -112,8 +123,10 @@ if (isset ( $_POST ["submit"] )) {
 				
 				if (mysqli_query ( $conn, $sql )) {
 					echo "Database created successfully";
+					echo "<br/>";
 				} else {
 					echo "Error creating database: " . mysqli_error ( $conn );
+					echo "<br/>";
 				}
 				$sql = "CREATE TABLE IF NOT EXISTS users.people (
 					  `id` INT NOT NULL AUTO_INCREMENT,
@@ -127,8 +140,10 @@ if (isset ( $_POST ["submit"] )) {
 					  UNIQUE INDEX `emaill_UNIQUE` (`emaill` ASC))";
 				if (mysqli_query ( $conn, $sql )) {
 					echo "TABLE created successfully";
+					echo "<br/>";
 				} else {
 					echo "Error creating TABLE: " . mysqli_error ( $conn );
+					echo "<br/>";
 				}
 				
 				// Escape user inputs for security
@@ -141,29 +156,16 @@ if (isset ( $_POST ["submit"] )) {
 				VALUES ('$name', '$email', '$age', '$relationShip', '$path')";
 				if (mysqli_query ( $conn, $sql )) {
 					echo "Row insert successfully";
+					echo "<br/>";
 				} else {
 					echo "Error insert the row " . mysqli_error ( $conn );
+					echo "<br/>";
 				}
 				
 				mysqli_close ( $conn );
 			}
 		}
 	}
-
-
-// database connection
-// $servername = "localhost:8080";
-// $username = "root";
-// $password = "";
-
-// // Create connection
-// $conn = mysqli_connect($servername, $username, $password);
-
-// // Check connection
-// if (!$conn) {
-// die("Connection failed: " . mysqli_connect_error());
-// }
-// echo "Connected successfully";
 ?>
 <!doctype html>
 <html lang="en">
