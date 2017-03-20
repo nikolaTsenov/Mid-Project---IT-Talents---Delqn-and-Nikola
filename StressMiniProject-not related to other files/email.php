@@ -1,7 +1,7 @@
 <?php
 if (isset ( $_POST ['submit'] )) {
 	$validEmail = false;
-	$email = $_POST ["emailTo"];
+	$email = $_POST ["emailFrom"];
 	
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 		$validEmail = true;
@@ -15,9 +15,14 @@ if (isset ( $_POST ['submit'] )) {
 		$emailTo = $_POST ['emailTo'];
 		$subject = $_POST ['subject'];
 		$message = $_POST ['message'];
-		$headers = "From: $emailFrom";
+		$headers = "From: postmaster@localhost" . "\r\n" .
+				"CC: somebodyelse@example.com"; /*extra header*/
 		
-		mail ( $emailTo, $subject, $message, $headers );
+		
+		if (mail ( $emailTo, $subject, $message, $headers )) {
+			echo "mail send successfully";
+		}
+		
 	} else {
 		echo "Invalid email";
 	}
