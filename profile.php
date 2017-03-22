@@ -51,6 +51,7 @@ if(isset($_POST['submit'])){
 //profile picture path
 $file = "users/" . $username . "/upload/profilePicture/profilePath.txt";
 $path = false;
+$picturePath = "";
 if(is_file($file)) {
 	$picturePath = file_get_contents("users/" . $username . "/upload/profilePicture/profilePath.txt");
 }
@@ -62,7 +63,7 @@ $profilePicture = is_file($picturePath) ? "block" : "none";
 if($succsess) {
 	$path = "users/$username/activity.txt";
 	$handle = fopen("users/".$username . '/activity.txt' ,'a+');
-	fwrite($handle, 'You changed your password at ' . date("d/m/Y") . " " . date("h:i:sa"));
+	fwrite($handle, 'Your password has been changed at ' . date("d/m/Y") . " " . date("h:i:sa"));
 	fwrite($handle, PHP_EOL);
 	fclose($handle);
 }

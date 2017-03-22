@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="./assets/css/register.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/profile.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/login.css" type="text/css" />
+<link rel="stylesheet" href="./assets/css/contacts.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
@@ -64,7 +65,7 @@ if (isset ( $_SESSION ['username'] )) {
    						<?php 
    						}
    						?>
-   						<a href="#contact">CONTACTS</a>
+   						<a href="?page=contact">CONTACTS</a>
    						<a href="?page=upload"><i class="fa fa-upload"></i>Upload</a>
    						<?php 
    						if (isset ( $_SESSION ['username'] )) {
@@ -108,7 +109,7 @@ if (isset ( $_SESSION ['username'] )) {
    					<?php 
    					}
    					?>
-					<li id="contacts"><a href="">CONTACTS</a></li>
+					<li id="contacts"><a href="?page=contact">CONTACTS</a></li>
 					<li id="search"><a href=""><i class="fa fa-search"></i></a></li>
 				</ul>
 				<ul id="profileNav">

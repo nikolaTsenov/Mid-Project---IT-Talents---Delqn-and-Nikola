@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+#contactsWrapper {
+	margin:auto;
+	width: 1170px;
+	height: 400px;
+}
+iframe {
+	margin-bottom: 200px;
+	width: 1170px;
+	height: 500px;
+
+}
+@media only screen and (max-width: 1100px){
+    iframe,#contactsWrapper { 		margin-bottom: 200px;;
+	width: 95%;
+	height: 400px; }
+}
