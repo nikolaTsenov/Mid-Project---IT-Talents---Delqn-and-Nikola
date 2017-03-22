@@ -44,10 +44,10 @@ if(isset($_POST['submit'])){
 			 		fwrite($handle,trim(md5($password)));
 			 		fwrite($handle,PHP_EOL);
 			 		
-			 		require 'uploadProfilePicture.php';
-			 		$activityHandle = fopen("./users/".$username . '/upload/profilePicture/profilePath.txt' ,'a+');
-			 		fwrite($activityHandle, $target_file);
-			 		fclose($activityHandle);
+			 		
+			 		
+			 		
+				 		require 'uploadProfilePicture.php';
 			 		
 			 		fclose($handle);
 						$_SESSION['username'] = $username;	 

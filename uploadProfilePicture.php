@@ -1,10 +1,13 @@
 <?php 
 // UPLOAD
 $target_dir = "users/" . $username . "/upload/profilePicture/";
+$txtFile = "users/" . $username . "/upload/profilePicture/profilePath.txt";
 $target_file = $target_dir . basename ( $_FILES ["fileToUpload"] ["name"] );
 $path = $target_file;
 $uploadOk = 1;
 $imageFileType = pathinfo ( $target_file, PATHINFO_EXTENSION );
+$exist = false;
+
 // Check if image file is a actual image or fake image
 	if (! empty ( $_FILES ["fileToUpload"] ["tmp_name"] )) {
 		$check = getimagesize ( $_FILES ["fileToUpload"] ["tmp_name"] );
@@ -12,7 +15,7 @@ $imageFileType = pathinfo ( $target_file, PATHINFO_EXTENSION );
 			$uploadOk = 0;
 			setMessage("File is not an image.");
 		} 
-			$exist = false;
+	
 		// Check if file already exists
 		if (file_exists ( $target_file )) {
 			$uploadOk = 0;
@@ -39,6 +42,18 @@ $imageFileType = pathinfo ( $target_file, PATHINFO_EXTENSION );
 				$msg =  "The file " . basename ( $_FILES ["fileToUpload"] ["name"] ) . " has been uploaded.";
 				setMessage("$msg");
 				$checkUpload = true;
+				if(is_file($txtFile)) {
+					$picturePath = file_get_contents($txtFile);
+					if((!$exist) && (strlen($picturePath) > 0)){
+						unlink("$picturePath");
+					}
+				}
+				if(is_file($txtFile)) {
+					unlink("users/" . $username . "/upload/profilePicture/profilePath.txt");
+				}
+				$activityHandle = fopen($txtFile ,'a+');
+				fwrite($activityHandle, $target_file);
+				fclose($activityHandle);
 			} else {
 				setMessage("Sorry, there was an error uploading your file.");
 			}

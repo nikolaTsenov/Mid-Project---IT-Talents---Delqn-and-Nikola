@@ -19,14 +19,7 @@ if(isset($_POST['submit'])){
 			
 			// change profile picture
 			require 'uploadProfilePicture.php';
-			$picturePath = file_get_contents("users/" . $username . "/upload/profilePicture/profilePath.txt");
-			if(!$exist){
-				unlink("$picturePath");
-			}
-			unlink("./users/".$username . '/upload/profilePicture/profilePath.txt');
-			$activityHandle = fopen("./users/".$username . '/upload/profilePicture/profilePath.txt' ,'a+');
-			fwrite($activityHandle, $target_file);
-			fclose($activityHandle);
+			
 			
 	if($password !== $repeatPassword) {
  				setMessage("These passwords don't match. Try again?");
@@ -56,8 +49,12 @@ if(isset($_POST['submit'])){
  			}
 }
 //profile picture path
-$path = file_get_contents("users/" . $username . "/upload/profilePicture/profilePath.txt");
-$profilePicture = is_file($path) ? "block" : "none";
+$file = "users/" . $username . "/upload/profilePicture/profilePath.txt";
+$path = false;
+if(is_file($file)) {
+	$picturePath = file_get_contents("users/" . $username . "/upload/profilePicture/profilePath.txt");
+}
+$profilePicture = is_file($picturePath) ? "block" : "none";
 
 
 
@@ -80,7 +77,7 @@ if($succsess) {
 
     <legend>
 	    <div style="display:<?= $profilePicture?>">
-	    <img id = "profilePicture" src='<?= $path ?>' />
+	    <img id = "profilePicture" src='<?= $picturePath ?>' />
 	    </div>
     <?= $username ?></legend>
 
