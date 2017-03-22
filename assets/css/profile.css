@@ -191,6 +191,15 @@ div#error {
 	border-radius:50%;
 }
 
+span#succsess {
+	color: green;
+}
+#rePasswordError {
+	color: red;
+}
 #logoutButton {
-	color:red;
+	color:red
+}
+legend {
+	margin-bottom: -20px;
 }

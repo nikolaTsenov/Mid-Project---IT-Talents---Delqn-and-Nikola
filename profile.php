@@ -9,13 +9,14 @@ if (!isset($_SESSION['username'])) {
 }else {
 	$username = $_SESSION['username'];
 }
-
+$succsess = false;
 if(isset($_POST['submit'])){
 			$username = $_SESSION['username'];
 			$password = trim(htmlentities($_POST['password']));
 			$repeatPassword = trim(htmlentities($_POST['repeatPassword']));
 			$matchPassword = true;
 			$characters = true;
+			
 	if($password !== $repeatPassword) {
  				setMessage("These passwords don't match. Try again?");
  				$matchPassword=false;
@@ -40,10 +41,21 @@ if(isset($_POST['submit'])){
 					}
 					$current = implode(PHP_EOL,$current);
 				file_put_contents($file_path,$current);
+				$succsess = true;
  			}
 }
 $path = "./users/" . $username . "/upload/profilePicture/profile.JPG";
 $profilePicture = is_file($path) ? "block" : "none";
+
+
+//last profile activity
+if($succsess) {
+	$path = "users/$username/activity.txt";
+	$handle = fopen("users/".$username . '/activity.txt' ,'a+');
+	fwrite($handle, 'You changed your password at ' . date("d/m/Y") . " " . date("h:i:sa"));
+	fwrite($handle, PHP_EOL);
+	fclose($handle);
+}
 
 ?>
 
@@ -58,7 +70,7 @@ $profilePicture = is_file($path) ? "block" : "none";
 	    <img id = "profilePicture" src='./users/<?= $username ?>/upload/profilePicture/profile.jpg'/ />
 	    </div>
     <?= $username ?></legend>
-	<a  href="?page=logout"><input id="logoutButton" type="submit" value="Logout" /> </a>
+	<a  href="?page=logout"><input id="logoutButton" type="submit" value="Logout"  style='color:#E95757'> </a>
 		<form action="?page=profile" method="post">
 			<div class='row'>
 				<label for="password">New Password</label>
@@ -68,10 +80,38 @@ $profilePicture = is_file($path) ? "block" : "none";
 			<div class='row'>
 				<label for="repeatPassword">Repeat your new password</label>
 				<input type="password" placeholder="Confirm your password" name='repeatPassword' id = "repeatPassword">
-				<span id="rePasswordError" class ="error"></span>
+				<span id="rePasswordError" class ="error">
+					<?php 
+							$messages = getMessages();
+							foreach ($messages as $msg) {
+								echo $msg;
+								echo "<br/>";
+							}
+					?>
+				</span>
+				<span id="succsess">
+					<?php 
+						if($succsess) {
+							echo 'Your password has been changed successfully!';
+						}
+					?>
+				</span>
+				
 			</div>
 			<input name = "submit" id ="submit" type="submit" value="Update">
 		</form>
+		<div>
+			<span>User activity: </span>
+			<div id="activityLog">
+				<?php 
+				$activities = file_get_contents("users/" . $username . "/activity.txt");
+				$act = explode(PHP_EOL,$activities);
+				foreach ($act as $activtiy) {
+					echo $activtiy . "<br/>";
+				}
+				?>
+			</div>
+		</div>
 	</div>
 </div>
 

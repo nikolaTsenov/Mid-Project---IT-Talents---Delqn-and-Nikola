@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="./assets/css/gornaLenta.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/register.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/profile.css" type="text/css" />
+<link rel="stylesheet" href="./assets/css/login.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
@@ -125,15 +126,7 @@ if (isset ( $_SESSION ['username'] )) {
 				</form>
 			</header>	
 	</div>	
-	<div id="errors" style = "color:red;">
-		<?php 
-			$messages = getMessages();
-			foreach ($messages as $msg) {
-				echo $msg;
-				echo "<br/>";
-			}
-		?>
-	</div>
+
 	<script type="text/javascript">
 			/* When the user clicks on the button, 
 			toggle between hiding and showing the dropdown content */

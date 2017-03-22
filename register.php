@@ -36,6 +36,10 @@ if(isset($_POST['submit'])){
 			 
 			 		$handle = fopen('users/register.txt','a+');
 			 		mkdir("users/" . $username);
+			 		
+			 		$activityHandle = fopen("users/".$username . '/activity.txt' ,'a+');
+			 		fclose($activityHandle);
+			 		
 			 		mkdir("users/" . $username . "/upload");
 			 		mkdir("users/" . $username . "/upload/profilePicture");
 			 		fwrite($handle, $username);
@@ -87,7 +91,15 @@ $jsonArray = json_encode($jsonArray);
 			<div class='row'>
 				<label for="repeatPassword">Confirm your password</label>
 				<input type="password" placeholder="Confirm your password" name='repeatPassword' id = "repeatPassword" data-required="true" data-error-message="Your confirm password is required" onkeyup = "validatePassword(this.value)" onblur="checkCharacters(this.value)">
-				<span id="rePasswordError" class ="error"></span>
+					<span id="rePasswordError" class ="error" >	
+						<?php 
+							$messages = getMessages();
+							foreach ($messages as $msg) {
+								echo $msg;
+								echo "<br/>";
+							}
+						?>
+					</span>
 			</div>
 			<input name = "submit" id ="submit" type="submit" value="Register">
 		</form>
