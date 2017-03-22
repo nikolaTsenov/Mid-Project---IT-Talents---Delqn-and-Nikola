@@ -13,6 +13,7 @@ $fileSize = true; // flag - is this file the allowed size
 $emptyFile = false; // flag - is there any selected file
 
 $validTitle = false;
+$uniqueTitle = true;
 // Is 'Upload' Pressed:
 if (isset ( $_POST ['submit'] )) {
 	
@@ -34,6 +35,36 @@ if (isset ( $_POST ['submit'] )) {
 			// Is the title valid:
 			if (mb_strlen($fileTitle,"UTF-8") > 2 && mb_strlen($fileTitle,"UTF-8") <= 30) {
 				$validTitle = true;
+			}
+			// Does the title contain symbols that are not allowed:
+			for ($t = 0; $t < mb_strlen($fileTitle,"UTF-8"); $t++) {
+				if ($fileTitle{$t} == "#") {
+					$validTitle = false;
+				}
+				if ($t > 0 && $fileTitle{$t} == " " && $fileTitle{$t-1} == " ") {
+					$validTitle = false;
+				}
+			}
+			// Is the title unique in the category folder of the user:
+			if (file_exists ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . '.' . $imageFileType)) {
+				$uniqueTitle = false;
+			}
+			// Is the title unique for the whole format:
+			if ($uniqueTitle) {
+				$filePath= "./users/gallery.txt";
+				$currentGallery = file_get_contents($filePath);
+				
+				$currentGallery = explode(PHP_EOL,$currentGallery);
+				array_pop($currentGallery);
+				for($index = 0; $index < count($currentGallery); $index++) {
+					$galleryArray = explode('#',$currentGallery[$index]);
+					if ($galleryArray[3] == $imageFileType) {
+						if ($galleryArray[1] == $fileTitle) {
+							$uniqueTitle = false;
+							break;
+						}
+					}
+				}
 			}
 			// Is there any file selected:
 			if (! empty ( $fileOnServerName )) {
@@ -72,7 +103,7 @@ if (isset ( $_POST ['submit'] )) {
 			} else {
 				$emptyFile = true;
 			}
-			if ($uploadFile && $fileSize && $validTitle) {
+			if ($uploadFile && $fileSize && $validTitle && $uniqueTitle) {
 				if (is_uploaded_file ( $fileOnServerName )) {
 					
 					if (! file_exists ( './users/' . $_SESSION ['username'] . '/upload/' . $category )) {
@@ -83,6 +114,30 @@ if (isset ( $_POST ['submit'] )) {
 					//move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
 					if (move_uploaded_file ( $fileOnServerName, './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $newfilename )) {
 						$checkSuccessfulUpload = true;
+						
+						$likesHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Likes.txt','a+' );
+						
+						fwrite($likesHandle,$_SESSION ['username']);
+						fwrite($likesHandle,'#');
+						fwrite($likesHandle,'0');
+						fwrite($likesHandle,'#');
+						fwrite($likesHandle,PHP_EOL);
+						
+						fclose($likesHandle);
+						
+						$dislikesHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Dislikes.txt','a+' );
+						
+						fwrite($dislikesHandle,$_SESSION ['username']);
+						fwrite($dislikesHandle,'#');
+						fwrite($dislikesHandle,'0');
+						fwrite($dislikesHandle,'#');
+						fwrite($dislikesHandle,PHP_EOL);
+						
+						fclose($dislikesHandle);
+						
+						$commentsHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Comments.txt','a+' );
+						
+						fclose($commentsHandle);
 						
 						$galleryHandle = fopen('users/gallery.txt','a+');
 						
@@ -158,6 +213,7 @@ if (! isset ( $_SESSION ['username'] )) {
 				</select>
 			</div>
 			<input name="submit" type="submit" value="Upload" id="uploadSubmit" >
+			<p id="appendFileSizeWarning"></p>
 			<?php 
 				if (isset ( $_POST ['submit'] ) && !$logged) {
 					echo "<p id='warningUpload' >You must login in order to upload!</p>";
@@ -178,7 +234,10 @@ if (! isset ( $_SESSION ['username'] )) {
 					echo "<p id='warningUpload' >You are not allowed to upload a file more than 8 MB!</p>";
 				}
 				if (isset ( $_POST ['submit'] ) && !$validTitle && $logged) {
-					echo "<p id='warningUpload' >Please, add title to your post!</p>";
+					echo "<p id='warningUpload' >Please, add a correct title to your post!</p>";
+				}
+				if (!$uniqueTitle) {
+					echo "<p id='warningUpload' >We are sorry, the title you have chosen has been taken. Try another.</p>";
 				}
 			?>
 		</form>

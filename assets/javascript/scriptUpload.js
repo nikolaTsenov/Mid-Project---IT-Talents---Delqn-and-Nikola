@@ -44,6 +44,15 @@ titleUpload.onblur = function () {
 		document.getElementById("appendTitleWarning").innerHTML = "";
 		submitButton.disabled = false;
 	}
+	for (var i = 0; i < titleUpload.value.length; i++) {
+		var checkItForSymbol = titleUpload.value.charAt(i);
+		console.log(checkItForSymbol);
+		if (checkItForSymbol == '#') {
+			uploadValidTitle = false;
+			document.getElementById("appendTitleWarning").innerHTML = "We are sorry! Your title cannot contain '#'!";
+			submitButton.disabled = true;
+		}
+	}
 }
 
 
@@ -57,5 +66,31 @@ titleUpload.onkeyup = function () {
 	if (titleUpload.value.trim().length >= 3) {
 		submitButton.disabled = false;
 	}
+	if (titleUpload.value.trim().length > 30) {
+		submitButton.disabled = false;
+	}
 }
 
+/* submitButton.onclick = function checkFileSize () {
+	var input, file;
+	if (!window.FileReader) {
+		return;
+    }
+	input = document.getElementById('fileUpload');
+	if (!input) {
+		document.getElementById("appendFileSizeWarning").innerHTML = "There is no file put for upload!";
+	}
+	else if (!input.files) {
+		return;
+    }
+	else if (!input.files[0]) {
+		document.getElementById("appendFileSizeWarning").innerHTML = "Please, select a file before clicking upload!";
+    } 
+	else {
+        file = input.files[0];
+        if (file.size > 8000000) {
+        	document.getElementById("appendFileSizeWarning").innerHTML = "The maximum allowed file size is 8MB.";
+        }
+    } 
+	
+} */

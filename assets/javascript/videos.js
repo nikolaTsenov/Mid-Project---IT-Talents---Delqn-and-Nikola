@@ -26,7 +26,7 @@ function gallery () {
 					if (posts.category == "memes") {
 						cat = "Memes";
 					}
-					if (posts.category == "awkaward") {
+					if (posts.category == "awkward") {
 						cat = "Awkward";
 					}
 					if (posts.category == "blackHum") {
@@ -159,7 +159,7 @@ function categoryChange() {
 	    }
 	}
 	if (c4.length > 0) {
-	    if (document.getElementById('awkaward').checked == true) {
+	    if (document.getElementById('awkward').checked == true) {
 			for (var i=0;i<c4.length;i++){
 				c4[i].style.display = 'block';
 			}
