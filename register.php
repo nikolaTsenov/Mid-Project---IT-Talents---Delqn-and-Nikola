@@ -5,18 +5,14 @@ if(!$index) {
 }
 
 if(isset($_POST['submit'])){
-
-
+		
 			$username = trim(htmlentities($_POST['username']));
 			$password = trim(htmlentities($_POST['password']));
 			$repeatPassword = trim(htmlentities($_POST['repeatPassword']));
 			$matchPassword = true;
 			$characters = true;
 			$used = false;
-
-				
-
-
+	
 			if((file_exists("users/" . $username)) && (strlen($username) > 0)) {
 				setMessage("That username is taken. Try another.");
  				$used=true;
@@ -42,17 +38,23 @@ if(isset($_POST['submit'])){
 			 		
 			 		mkdir("users/" . $username . "/upload");
 			 		mkdir("users/" . $username . "/upload/profilePicture");
+			 	
 			 		fwrite($handle, $username);
 			 		fwrite($handle,'#');
 			 		fwrite($handle,trim(md5($password)));
 			 		fwrite($handle,PHP_EOL);
 			 		
+			 		require 'uploadProfilePicture.php';
+			 		$activityHandle = fopen("./users/".$username . '/upload/profilePicture/profilePath.txt' ,'a+');
+			 		fwrite($activityHandle, $target_file);
+			 		fclose($activityHandle);
 			 		
 			 		fclose($handle);
 						$_SESSION['username'] = $username;	 
 						header('Location:?loged.php');
 						die();
  			}
+
 }
 
 
@@ -77,7 +79,7 @@ $jsonArray = json_encode($jsonArray);
 <div id="registration-form">
 	<div class='fieldset'>
     <legend>Register</legend>
-		<form action="?page=register" method="post" data-validate="parsley">
+		<form action="?page=register" method="post" data-validate="parsley" enctype="multipart/form-data">
 			<div class='row'>
 				<label for='username'>Username</label>
 				<input type="text" placeholder="Username" name='username' id='username' data-required="true" data-error-message="Your username is required" onblur="checkCharacters(this.value),checkUsername(this.value)">
@@ -101,6 +103,10 @@ $jsonArray = json_encode($jsonArray);
 						?>
 					</span>
 			</div>
+			<div>
+		   	<span>Select Image: </span>
+		   	</div>
+			<input type="file" name="fileToUpload" id="fileToUpload">
 			<input name = "submit" id ="submit" type="submit" value="Register">
 		</form>
 	</div>

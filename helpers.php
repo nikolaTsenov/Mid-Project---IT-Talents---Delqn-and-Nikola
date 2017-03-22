@@ -28,7 +28,7 @@ function getMessages() {
 function clearMessages() {
 	$_SESSION['messages'] = array();
 }
-function myErrorHandler($errNumber,$errMsg) {
+ function myErrorHandler($errNumber,$errMsg) {
 	if ($errNumber == E_WARNING || $errNumber == E_NOTICE) {
 		echo "<p id='warningNotice'>Sth went slightly out of the true path.</p>";
 		echo "<p id='warningNotice'>Continue with script.</p>";
@@ -40,4 +40,4 @@ function myErrorHandler($errNumber,$errMsg) {
 		fclose($galleryHandle);
 		die();
 	}
-}
+} 

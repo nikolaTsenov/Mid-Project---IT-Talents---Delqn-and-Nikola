@@ -17,6 +17,17 @@ if(isset($_POST['submit'])){
 			$matchPassword = true;
 			$characters = true;
 			
+			// change profile picture
+			require 'uploadProfilePicture.php';
+			$picturePath = file_get_contents("users/" . $username . "/upload/profilePicture/profilePath.txt");
+			if(!$exist){
+				unlink("$picturePath");
+			}
+			unlink("./users/".$username . '/upload/profilePicture/profilePath.txt');
+			$activityHandle = fopen("./users/".$username . '/upload/profilePicture/profilePath.txt' ,'a+');
+			fwrite($activityHandle, $target_file);
+			fclose($activityHandle);
+			
 	if($password !== $repeatPassword) {
  				setMessage("These passwords don't match. Try again?");
  				$matchPassword=false;
@@ -44,8 +55,10 @@ if(isset($_POST['submit'])){
 				$succsess = true;
  			}
 }
-$path = "./users/" . $username . "/upload/profilePicture/profile.JPG";
+//profile picture path
+$path = file_get_contents("users/" . $username . "/upload/profilePicture/profilePath.txt");
 $profilePicture = is_file($path) ? "block" : "none";
+
 
 
 //last profile activity
@@ -67,11 +80,13 @@ if($succsess) {
 
     <legend>
 	    <div style="display:<?= $profilePicture?>">
-	    <img id = "profilePicture" src='./users/<?= $username ?>/upload/profilePicture/profile.jpg'/ />
+	    <img id = "profilePicture" src='<?= $path ?>' />
 	    </div>
     <?= $username ?></legend>
+
 	<a  href="?page=logout"><input id="logoutButton" type="submit" value="Logout"  style='color:#E95757'> </a>
-		<form action="?page=profile" method="post">
+		<form action="?page=profile" method="post" enctype="multipart/form-data">
+		
 			<div class='row'>
 				<label for="password">New Password</label>
 				<input type="password" placeholder="password"  name='password' id="password">
@@ -98,6 +113,10 @@ if($succsess) {
 				</span>
 				
 			</div>
+		   	<div>
+		   	<span>Select Image: </span>
+		   	</div>
+			<input type="file" name="fileToUpload" id="fileToUpload">
 			<input name = "submit" id ="submit" type="submit" value="Update">
 		</form>
 		<div>
