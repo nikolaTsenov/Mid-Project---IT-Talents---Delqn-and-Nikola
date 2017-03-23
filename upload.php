@@ -150,6 +150,10 @@ if (isset ( $_POST ['submit'] )) {
 						fwrite($galleryHandle,end($temporary));
 						fwrite($galleryHandle,'#');
 						fwrite($galleryHandle,$category);
+						fwrite($galleryHandle,'#');
+						fwrite($galleryHandle,'0');
+						fwrite($galleryHandle,'#');
+						fwrite($galleryHandle,'0');
 						fwrite($galleryHandle,PHP_EOL);
 						
 						fclose($galleryHandle);
