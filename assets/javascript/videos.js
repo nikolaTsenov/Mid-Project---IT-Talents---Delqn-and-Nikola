@@ -1,7 +1,22 @@
 window.onload = function() {gallery()};
 
 function gallery () {  
-	var xhttp = new XMLHttpRequest();
+	if(typeof XMLHttpRequest !== 'undefined') xhttp = new XMLHttpRequest();
+	else {
+	   var versions = ["MSXML2.XmlHttp.5.0", 
+				        "MSXML2.XmlHttp.4.0",
+				        "MSXML2.XmlHttp.3.0", 
+				        "MSXML2.XmlHttp.2.0",
+				        "Microsoft.XmlHttp"]
+	
+	for(var i = 0, len = versions.length; i < len; i++) {
+	   try {
+	       xhttp = new ActiveXObject(versions[i]);
+	       break;
+	   }
+	   catch(e){}
+	} // end for
+	}
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			// successfuly received response
@@ -78,23 +93,28 @@ function gallery () {
 					
 					var like = document.createElement('button');
 					like.className = "like";
+					like.id = "like1"+posts.title;
+					like.onclick = "likeIT()";
 					like.innerHTML = "<i class='fa fa-thumbs-up' aria-hidden='true'></i>";
 					posterLike.appendChild(like);
 					
 					var countLikes = document.createElement('p');
 					countLikes.className = "countLikes";
-					countLikes.innerHTML = "0";
+					countLikes.id = "like2"+posts.title;
+					countLikes.innerHTML = posts.likes;
 					countLikes.style.display = "inline-block";
 					posterLike.appendChild(countLikes);
 					
 					var dislike = document.createElement('button');
 					dislike.className = "dislike";
+					dislike.id = "dislike1"+posts.title;
 					dislike.innerHTML = "<i class='fa fa-thumbs-down' aria-hidden='true'></i>";
 					posterDislike.appendChild(dislike);
 					
 					var countDislikes = document.createElement('p');
 					countDislikes.className = "countDislikes";
-					countDislikes.innerHTML = "0";
+					countDislikes.id = "dislike2"+posts.title;
+					countDislikes.innerHTML = posts.dislikes;
 					countDislikes.style.display = "inline-block";
 					posterDislike.appendChild(countDislikes);
 
@@ -183,3 +203,46 @@ function categoryChange() {
 	    }
 	}
 }
+
+var likeButtons = document.getElementsByClassName('like');
+
+var likeIt = function likeIt () {
+	
+	console.log('kulturen nadpis');
+}
+
+for (var v = 0; v < likeButtons.length; v++) {
+	likeButtons[v].addEventListener('click', likeIt);
+}
+
+
+/*function likeIt () {  
+	if(typeof XMLHttpRequest !== 'undefined') xhttp2 = new XMLHttpRequest();
+	else {
+	   var versions = ["MSXML2.XmlHttp.5.0", 
+				        "MSXML2.XmlHttp.4.0",
+				        "MSXML2.XmlHttp.3.0", 
+				        "MSXML2.XmlHttp.2.0",
+				        "Microsoft.XmlHttp"]
+	
+	for(var i = 0, len = versions.length; i < len; i++) {
+	   try {
+	       xhttp2 = new ActiveXObject(versions[i]);
+	       break;
+	   }
+	   catch(e){}
+	} // end for
+	}
+	xhttp2.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			// successfuly received response
+			//var data2 = JSON.parse(this.responseText);
+			console.log('kor');
+			
+		}
+	}
+	
+	xhttp2.open("POST","./LikeService.php",true);
+	xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp2.send(tit=this.id);	
+}*/
