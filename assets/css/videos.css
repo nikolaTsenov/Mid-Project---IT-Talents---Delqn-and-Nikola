@@ -21,6 +21,31 @@
 	height: 30em;
 	float: right;
 }
+
+#showHideSelector {
+	padding: 1.5em;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+	color: #202225;
+}
+#watchForm1 {
+	width: 100%;
+	text-align: center;
+}
+#watchForm1 div {
+	display: inline-block;
+	padding: 1em;
+	color: #202225;
+}
+#watchForm1 div label {
+	cursor: pointer;
+}
+.category {
+	color: #f44242;
+	font-style: italic;
+}
+
 /*  .poster deos not exist, I have kept it here, just to know its params 
 .poster {
 	width: 98.5%;
@@ -30,11 +55,15 @@
 .posterTitle {
 	text-align: center;
 	padding: 1em;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #202225;
 }
-.posterSubTitle {
+.posterSubTitle, .posterSubTitle2 {
 	text-align: center;
 	padding: 0.5em;
 	padding-top: 0em;
+	color: #d83504;
 }
 .posterContainer {
 	max-width: 100%;
@@ -69,10 +98,10 @@
 	display: inline-block;
 }
 .like, .dislike {
-	width: 3em;
-	height: 3em;
+	height: 2em;
 	display: inline-block;
 	font-size: 1em;
+	padding: 0.3em;
 	background-color: Transparent;
     background-repeat: no-repeat;
 	cursor: pointer;
@@ -82,12 +111,14 @@
 .like {
 	color: green;
 	border: 1px solid green;
-	border-radius: 50%;
+	border-radius: 10%;
+	width: 3em;
 }
 .dislike {
 	color: red;
 	border: 1px solid red;
-	border-radius: 50%;
+	border-radius: 10%;
+	width: 4em;
 }
 .like:hover, .dislike:hover, .like:active, .like:hover {
 	font-weight: bold;
@@ -102,3 +133,30 @@
 .countDislikes {
 	color: darkRed;
 }
+#titleVideosLink {
+	margin-left: 2em;
+	font-weight: bolder;
+	font-size: 1.5em;
+	color: #4286f4;
+}
+#titleVideosLink img {
+	vertical-align: middle;
+}
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+/*** custom checkboxes ***/
+
+input[type=checkbox] { display:none; } /* to hide the checkbox itself */
+input[type=checkbox] + label:before {
+  font-family: FontAwesome;
+  display: inline-block;
+}
+
+input[type=checkbox] + label:before { content: "\f096"; } /* unchecked icon */
+input[type=checkbox] + label:before { letter-spacing: 10px; } /* space between checkbox and label */
+input[type=checkbox] + label:before { cursor: pointer; } 
+
+input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
+input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
+input[type=checkbox]:checked + label:before { cursor: pointer; }

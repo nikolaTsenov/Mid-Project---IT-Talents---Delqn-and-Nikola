@@ -115,26 +115,6 @@ if (isset ( $_POST ['submit'] )) {
 					if (move_uploaded_file ( $fileOnServerName, './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $newfilename )) {
 						$checkSuccessfulUpload = true;
 						
-						$likesHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Likes.txt','a+' );
-						
-						fwrite($likesHandle,$_SESSION ['username']);
-						fwrite($likesHandle,'#');
-						fwrite($likesHandle,'0');
-						fwrite($likesHandle,'#');
-						fwrite($likesHandle,PHP_EOL);
-						
-						fclose($likesHandle);
-						
-						$dislikesHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Dislikes.txt','a+' );
-						
-						fwrite($dislikesHandle,$_SESSION ['username']);
-						fwrite($dislikesHandle,'#');
-						fwrite($dislikesHandle,'0');
-						fwrite($dislikesHandle,'#');
-						fwrite($dislikesHandle,PHP_EOL);
-						
-						fclose($dislikesHandle);
-						
 						$commentsHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Comments.txt','a+' );
 						
 						fclose($commentsHandle);

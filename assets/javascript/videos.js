@@ -1,5 +1,5 @@
 window.onload = function() {gallery()};
-
+/*Calling AJAX to load all videos*/
 function gallery () {  
 	if(typeof XMLHttpRequest !== 'undefined') xhttp = new XMLHttpRequest();
 	else {
@@ -9,7 +9,7 @@ function gallery () {
 				        "MSXML2.XmlHttp.2.0",
 				        "Microsoft.XmlHttp"]
 	
-	for(var i = 0, len = versions.length; i < len; i++) {
+	for(var i = 0; i < versions.length; i++) {
 	   try {
 	       xhttp = new ActiveXObject(versions[i]);
 	       break;
@@ -31,21 +31,13 @@ function gallery () {
 				if (posts.fileExtension == "mp4") {
 					
 					var cat;
+					var categs = new Array("balkan", "engHum", "memes", "awkward", "blackHum");
+					var categsFullNames = new Array("Balkan Humour", "English Humour", "Memes", "Awkward", "Dark Humour");
 					
-					if (posts.category == "balkan") {
-						cat = "Balkan Humour";
-					}
-					if (posts.category == "engHum") {
-						cat = "English Humour";
-					}
-					if (posts.category == "memes") {
-						cat = "Memes";
-					}
-					if (posts.category == "awkward") {
-						cat = "Awkward";
-					}
-					if (posts.category == "blackHum") {
-						cat = "Dark Humour";
+					for (var cats = 0; cats < categs.length; cats++) {
+						if (posts.category == categs[cats]) {
+							cat = categsFullNames[cats];
+						}
 					}
 					
 					var poster = document.createElement('div');
@@ -67,6 +59,11 @@ function gallery () {
 					posterSubTitle.className = "posterSubTitle";
 					posterSubTitle.innerHTML = "Category: "+cat;
 					poster.appendChild(posterSubTitle);
+					
+					var posterSubTitle2 = document.createElement('h6');
+					posterSubTitle2.className = "posterSubTitle2";
+					posterSubTitle2.innerHTML = "Uploaded by: "+posts.username;
+					poster.appendChild(posterSubTitle2);
 					
 					var posterContainer = document.createElement('div');
 					posterContainer.className = "posterContainer";
@@ -93,43 +90,134 @@ function gallery () {
 					
 					var like = document.createElement('button');
 					like.className = "like";
-					like.id = "like1"+posts.title;
-					like.onclick = "likeIT()";
-					like.innerHTML = "<i class='fa fa-thumbs-up' aria-hidden='true'></i>";
+					like.id = "like1_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+					like.innerHTML = "Like";
 					posterLike.appendChild(like);
 					
 					var countLikes = document.createElement('p');
 					countLikes.className = "countLikes";
-					countLikes.id = "like2"+posts.title;
+					countLikes.id = "like2_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
 					countLikes.innerHTML = posts.likes;
 					countLikes.style.display = "inline-block";
 					posterLike.appendChild(countLikes);
 					
 					var dislike = document.createElement('button');
 					dislike.className = "dislike";
-					dislike.id = "dislike1"+posts.title;
-					dislike.innerHTML = "<i class='fa fa-thumbs-down' aria-hidden='true'></i>";
+					dislike.id = "dislike1_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+					dislike.innerHTML = "dislike";
 					posterDislike.appendChild(dislike);
 					
 					var countDislikes = document.createElement('p');
 					countDislikes.className = "countDislikes";
-					countDislikes.id = "dislike2"+posts.title;
+					countDislikes.id = "dislike2_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
 					countDislikes.innerHTML = posts.dislikes;
 					countDislikes.style.display = "inline-block";
 					posterDislike.appendChild(countDislikes);
-
+					
+					var warnings = document.createElement('p');
+					warnings.className = "warnUsers";
+					warnings.id = "warn_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+					warnings.innerHTML = "";
+					warnings.style.color = "#2a2d2d";
+					posterReactions.appendChild(warnings);
 				}
 			}
 			var result = document.getElementById('result');
 			result.appendChild(output);
+			
+			
 		}
+		
+		/*Calling AJAX to set properly work of Like buttons*/
+		var likeButtons = document.getElementsByClassName('like');
+		var dislikeButtons = document.getElementsByClassName('dislike');
+		function reactToIt (event) {
+			
+			if(typeof XMLHttpRequest !== 'undefined') xhttp2 = new XMLHttpRequest();
+			else {
+			   var versions = ["MSXML2.XmlHttp.5.0", 
+						        "MSXML2.XmlHttp.4.0",
+						        "MSXML2.XmlHttp.3.0", 
+						        "MSXML2.XmlHttp.2.0",
+						        "Microsoft.XmlHttp"]
+			
+			for(var i = 0; i < versions.length; i++) {
+			   try {
+			       xhttp2 = new ActiveXObject(versions[i]);
+			       break;
+			   }
+			   catch(e){}
+			} // end for
+			}
+			xhttp2.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					// successfuly received response
+					// Clear warnings:
+					var cleanWarnings = document.getElementsByClassName('warnUsers');
+					for (var w = 0; w < cleanWarnings.length; w++) {
+						cleanWarnings[w].innerHTML = "";
+					}
+					//get the respone:
+					var data2 = this.responseText;
+					console.log(data2);
+					//Button's id:
+					var e = event;
+					var currents = e.target;
+					var reactButId = currents.id;
+					// count likes paragraph id and accessing the paragraph:
+					var likeParId = reactButId.replace("like1_", "like2_");
+					var likePar = document.getElementById(likeParId);
+					// get the count likes paragraph inner HTML and prepare to change it:
+					var likeParString = likePar.innerHTML;
+					var newLikePar = likeParString.valueOf();
+					if (data2 == "cookie set") {
+						//increase likes by one
+						newLikePar++;
+					}
+					if (data2 == "cookie unset" || data2 == "clearedCache") {
+						//decrease likes by one
+						if (newLikePar.value == 0) {
+							newLikePar;
+						} else {
+							newLikePar--;
+						}
+					}
+					if (data2 == "Please, log in if you want to react to the posts of this site!" ||
+							data2 == "You cannot simultaneosly like and dislike a post!") {
+						newLikePar;
+						//message that you have to logi in:
+						if (reactButId.substr(0, 1) == "l") {
+							var warningToLog = reactButId.replace("like1_", "warn_");
+						} else {
+							var warningToLog = reactButId.replace("dislike1_", "warn_");
+						}
+						var warningToLogResult = document.getElementById(warningToLog);
+						warningToLogResult.innerHTML = data2;
+					}
+					likePar.innerHTML = newLikePar;
+				
+				}
+			}
+			
+			xhttp2.open("POST","./LikeService.php",true);
+			xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp2.send("tit="+event.currentTarget.id);
+		}
+		
+		for (var v = 0; v < likeButtons.length; v++) {
+			likeButtons[v].addEventListener('click', reactToIt, false);
+			dislikeButtons[v].addEventListener('click', reactToIt, false);
+		} 
+		/*End of AJAX call for proper work of Like buttons*/
 	}
 	
 	xhttp.open("POST","./videosService.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send();	
 }
+/*End of AJAX call for loading allvideos*/
 
+/*Setting a function for show/hide videos by category*/
 var category = document.getElementsByClassName('category');
 for (var c=0;c<category.length;c++) {
 	category[c].onchange = function() {categoryChange()};
@@ -142,107 +230,29 @@ function categoryChange() {
 	var c3 = document.getElementsByClassName('postermemes');
 	var c4 = document.getElementsByClassName('posterawkward');
 	var c5 = document.getElementsByClassName('posterblackHum');
-	if (c1.length > 0) {
-		if (document.getElementById('balkan').checked == true) {
-			for (var i=0;i<c1.length;i++){
-				c1[i].style.display = 'block';
-			}
-	    }
-	    if (document.getElementById('balkan').checked == false) {
-	    	for (var i=0;i<c1.length;i++){
-				c1[i].style.display = 'none';
-			}
-	    }
-	}
-	if (c2.length > 0) {
-	    if (document.getElementById('engHum').checked == true) {
-			for (var i=0;i<c2.length;i++){
-				c2[i].style.display = 'block';
-			}
-	    }
-	    if (document.getElementById('engHum').checked == false) {
-			for (var i=0;i<c2.length;i++){
-				c2[i].style.display = 'none';
-			}
-	    }
-	}
-	if (c3.length > 0) {
-	    if (document.getElementById('memes').checked == true) {
-			for (var i=0;i<c3.length;i++){
-				c3[i].style.display = 'block';
-			}
-	    }
-	    if (document.getElementById('memes').checked == false) {
-			for (var i=0;i<c3.length;i++){
-				c3[i].style.display = 'none';
-			}
-	    }
-	}
-	if (c4.length > 0) {
-	    if (document.getElementById('awkward').checked == true) {
-			for (var i=0;i<c4.length;i++){
-				c4[i].style.display = 'block';
-			}
-	    }
-	    if (document.getElementById('awkward').checked == false) {
-			for (var i=0;i<c4.length;i++){
-				c4[i].style.display = 'none';
-			}
-	    }
-	}
-	if (c5.length > 0) {
-	    if (document.getElementById('blackHum').checked == true) {
-			for (var i=0;i<c4.length;i++){
-				c4[i].style.display = 'block';
-			}
-	    }
-	    if (document.getElementById('blackHum').checked == false) {
-			for (var i=0;i<c5.length;i++){
-				c5[i].style.display = 'none';
-			}
-	    }
-	}
-}
-
-var likeButtons = document.getElementsByClassName('like');
-
-var likeIt = function likeIt () {
 	
-	console.log('kulturen nadpis');
-}
-
-for (var v = 0; v < likeButtons.length; v++) {
-	likeButtons[v].addEventListener('click', likeIt);
-}
-
-
-/*function likeIt () {  
-	if(typeof XMLHttpRequest !== 'undefined') xhttp2 = new XMLHttpRequest();
-	else {
-	   var versions = ["MSXML2.XmlHttp.5.0", 
-				        "MSXML2.XmlHttp.4.0",
-				        "MSXML2.XmlHttp.3.0", 
-				        "MSXML2.XmlHttp.2.0",
-				        "Microsoft.XmlHttp"]
+	var cs = new Array(c1,c2,c3,c4,c5);
+	var cIds = new Array("balkan", "engHum", "memes", "awkward", "blackHum");
 	
-	for(var i = 0, len = versions.length; i < len; i++) {
-	   try {
-	       xhttp2 = new ActiveXObject(versions[i]);
-	       break;
-	   }
-	   catch(e){}
-	} // end for
-	}
-	xhttp2.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			// successfuly received response
-			//var data2 = JSON.parse(this.responseText);
-			console.log('kor');
-			
+	for (var j = 0; j <= 4; j++) {
+		var cNth;
+		var cId;
+		
+		cNth = cs[j];
+		cId = cIds[j];
+		
+		if (cNth.length > 0) {
+			if (document.getElementById(cId).checked == true) {
+				for (var i=0;i<cNth.length;i++){
+					cNth[i].style.display = 'block';
+				}
+		    }
+		    if (document.getElementById(cId).checked == false) {
+		    	for (var i=0;i<cNth.length;i++){
+					cNth[i].style.display = 'none';
+				}
+		    }
 		}
 	}
-	
-	xhttp2.open("POST","./LikeService.php",true);
-	xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp2.send(tit=this.id);	
-}*/
+}
+/*End of function show/hide category*/

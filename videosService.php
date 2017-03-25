@@ -12,7 +12,9 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 				'title' => $row [1],
 				'fileName' => $row [2],
 				'fileExtension' => $row [3],
-				'category' => $row [4]
+				'category' => $row [4],
+				'likes' => $row [5],
+				'dislikes' =>$row [6]
 		);
 	}
 
