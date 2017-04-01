@@ -39,8 +39,7 @@ $exist = false;
 			// if everything is ok, try to upload file
 		} else  {
 			if (move_uploaded_file ( $_FILES ["fileToUpload"] ["tmp_name"], $target_file )) {
-				$msg =  "The file " . basename ( $_FILES ["fileToUpload"] ["name"] ) . " has been uploaded.";
-				setMessage("$msg");
+				$changeProfilePicture =  "Your profile picture has been changed successfully!";
 				$checkUpload = true;
 				if(is_file($txtFile)) {
 					$picturePath = file_get_contents($txtFile);
@@ -58,8 +57,6 @@ $exist = false;
 				setMessage("Sorry, there was an error uploading your file.");
 			}
 		}
-	} else {
-		setMessage("You have to choose file for upload");
 	}
 
 	?>

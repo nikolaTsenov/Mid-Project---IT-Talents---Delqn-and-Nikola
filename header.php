@@ -25,10 +25,18 @@ if (isset ( $_SESSION ['username'] )) {
 	#topperNav li {
 		width: 13.5%;
 	}
+	#news {
+		width:10%;
+	}
+
+	
 }
 @media all and (max-width:550px) {
 	#topperNav li {
 		width: 15%;
+	}
+	#registration-form {
+		width:60%;
 	}
 }
 <?php 
@@ -46,31 +54,20 @@ if (isset ( $_SESSION ['username'] )) {
    						<a href="?page=videos">VIDEOS</a>
    						<a href="?page=images">IMAGES</a>
    						<a href="?page=gifs">GIFS</a>
-   						<a href="#contact">NEWS</a>
    						<?php 
    						if (!isset ( $_SESSION ['username'] )) {
    						?>
-   							<a href="?page=register">Register</a>
-   						<?php 
-   						}
-   						?>
-   						<?php 
-   						if (!isset ( $_SESSION ['username'] )) {
-   						?>
-   						<a href="?page=login">Login</a>
-   						<?php 
-   						} else {
-   						?>
-   						<a href="?page=homepage">Login</a>
+   						<a href="?page=register">REGISTER</a>
+   						<a href="?page=login">LOGIN</a>		
    						<?php 
    						}
    						?>
    						<a href="?page=contact">CONTACTS</a>
-   						<a href="?page=upload"><i class="fa fa-upload"></i>Upload</a>
+   						<a href="?page=upload"><i class="fa fa-upload"></i>UPLOAD</a>
    						<?php 
    						if (isset ( $_SESSION ['username'] )) {
    						?>
-   							<a href=""><?php echo $_SESSION ['username']; ?></a>
+   							<a href="?page=profile"><?php echo $_SESSION ['username']; ?></a>
    						<?php 
    						}
    						?>
@@ -79,38 +76,28 @@ if (isset ( $_SESSION ['username'] )) {
 				<form id="searchingForm">
   					<input type="text" name="search" placeholder="Search..">
 				</form>
-				<h1 id="heading"><a href="?page=homepage"><img src="./assets/images/logo7.png" alt="logo7" />cheers</a></h1>
+				<h1 id="heading"><a href="?page=videos"><img src="./assets/images/logo7.png" alt="logo7" />cheers</a></h1>
 				<ul id="topperNav">
 					<li id="videos"><a href="?page=videos">VIDEOS</a></li>
 					<li id="images"><a href="?page=images">IMAGES</a></li>
 					<li id="gifs"><a href="?page=gifs">GIFS</a></li>
-					<li class="news"><a href="">NEWS</a>
-						<div class="dropboxHover">
-							<a href="">Link 1</a>
-							<a href="">Link 2</a>
-							<a href="">Link 3</a>
-						</div>
-					</li>
+				
 					<?php 
    					if (!isset ( $_SESSION ['username'] )) {
    					?>
-						<li id="register"><a href="?page=register">Register</a></li>
+						<li id="register" style="width:90px;"><a href="?page=register" style="width:90px;">REGISTER</a></li>
 					<?php 
    					}
 					?>
 					<?php 
    					if (!isset ( $_SESSION ['username'] )) {
    					?>
-   						<li id="login"><a href="?page=login">Login</a></li>
-   					<?php 
-   					} else {
-   					?>
-   						<li id="login"><a href="?page=homepage">Login</a></li>
+   						<li id="login"><a href="?page=login">LOGIN</a></li>
    					<?php 
    					}
    					?>
 					<li id="contacts"><a href="?page=contact">CONTACTS</a></li>
-					<li id="search"><a href=""><i class="fa fa-search"></i></a></li>
+					<li id="search" style="width:auto; margin-left:30px;"><a href=""style="width:auto;"><i class="fa fa-search"></i></a></li>
 				</ul>
 				<ul id="profileNav">
 					<li id="upload"><a href="?page=upload"><i class="fa fa-upload"></i>Upload</a></li>

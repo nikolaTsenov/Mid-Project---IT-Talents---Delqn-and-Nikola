@@ -11,7 +11,7 @@ if(isset($_GET['page'])) {
 		$page = 'notfound';
 	}
 }else {
-	$page = 'homepage';
+	$page = 'videos';
 }
 
 

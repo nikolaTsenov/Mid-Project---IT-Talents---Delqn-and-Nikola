@@ -6,7 +6,9 @@ if(!$index) {
 
 if(isset($_POST['submit'])){
 		
-			$username = trim(htmlentities($_POST['username']));
+			$username = htmlentities($_POST['username']);
+			$username = str_replace(' ', '', $username);
+			$username = str_replace('#', '', $username);
 			$password = trim(htmlentities($_POST['password']));
 			$repeatPassword = trim(htmlentities($_POST['repeatPassword']));
 			$matchPassword = true;
@@ -22,8 +24,8 @@ if(isset($_POST['submit'])){
  				$matchPassword=false;
  			} 
  			
- 			if((strlen($username) < 6) || (strlen($password) < 6) || (strlen($repeatPassword) < 6))	 {
- 						setMessage("Please use between 6 and 30 characters.");
+ 			if((strlen($username) < 6) || (strlen($password) < 6) || (strlen($repeatPassword) < 6) || (strlen($username) > 20) || (strlen($password)  > 20) || (strlen($repeatPassword)  > 20))	 {
+ 						setMessage("Please use between 6 and 20 characters.");
  						$characters = false;
  					}
  		

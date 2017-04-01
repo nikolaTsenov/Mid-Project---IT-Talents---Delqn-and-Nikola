@@ -10,6 +10,7 @@ if (!isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
 }
 $succsess = false;
+$changeProfilePicture = false;
 if(isset($_POST['submit'])){
 			$username = $_SESSION['username'];
 			$password = trim(htmlentities($_POST['password']));
@@ -21,16 +22,23 @@ if(isset($_POST['submit'])){
 			require 'uploadProfilePicture.php';
 			
 			
-	if($password !== $repeatPassword) {
- 				setMessage("These passwords don't match. Try again?");
- 				$matchPassword=false;
- 	} 
-	if((strlen($password) < 6) || (strlen($repeatPassword) < 6))	 {
- 					setMessage("Please use between 6 and 30 characters.");
+	
+ 	if((strlen($username) < 6) || (strlen($password) < 6) || (strlen($repeatPassword) < 6) || (strlen($username) > 20) || (strlen($password)  > 20) || (strlen($repeatPassword)  > 20))	 {
+ 					setMessage("Please use between 6 and 20 characters.");
  					$characters = false;
  	}
+ 	
+ 	if ((strlen($username) === 0) || (strlen($password) === 0) || (strlen($repeatPassword) === 0)) {
+ 		$characters = true;
+ 		clearMessages();
+ 	}
 	
-	if(($matchPassword == true) && ($characters == true)){
+ 	if($password !== $repeatPassword) {
+ 		setMessage("These passwords don't match. Try again?");
+ 		$matchPassword=false;
+ 	} 
+ 	
+ 	if(($matchPassword == true) && ($characters == true) && (strlen($username) > 0) && (strlen($password) > 0) && (strlen($repeatPassword) > 0)){
 			 
 			 		$file_path= "users/register.txt";
 					$current = file_get_contents($file_path);
@@ -64,6 +72,13 @@ if($succsess) {
 	$path = "users/$username/activity.txt";
 	$handle = fopen("users/".$username . '/activity.txt' ,'a+');
 	fwrite($handle, 'Your password has been changed at ' . date("d/m/Y") . " " . date("h:i:sa"));
+	fwrite($handle, PHP_EOL);
+	fclose($handle);
+}
+if($changeProfilePicture) {
+	$path = "users/$username/activity.txt";
+	$handle = fopen("users/".$username . '/activity.txt' ,'a+');
+	fwrite($handle, 'Your profile picture has been changed at ' . date("d/m/Y") . " " . date("h:i:sa"));
 	fwrite($handle, PHP_EOL);
 	fclose($handle);
 }
@@ -105,7 +120,10 @@ if($succsess) {
 				<span id="succsess">
 					<?php 
 						if($succsess) {
-							echo 'Your password has been changed successfully!';
+							echo 'Your password has been changed successfully!' ."<br/>";
+						}
+						if($changeProfilePicture) {
+							echo $changeProfilePicture;
 						}
 					?>
 				</span>
