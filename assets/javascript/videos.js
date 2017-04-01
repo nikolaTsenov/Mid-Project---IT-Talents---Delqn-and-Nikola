@@ -29,10 +29,12 @@ function gallery () {
 			for (var index=0; index < data.length; index++) {
 				var posts = data[index];
 				if (posts.fileExtension == "mp4") {
-					
+					// get the category of the posts:
 					var cat;
 					var categs = new Array("balkan", "engHum", "memes", "awkward", "blackHum");
 					var categsFullNames = new Array("Balkan Humour", "English Humour", "Memes", "Awkward", "Dark Humour");
+					// get the session of the user:
+					var userSession = document.getElementById('anchor').innerHTML;
 					
 					for (var cats = 0; cats < categs.length; cats++) {
 						if (posts.category == categs[cats]) {
@@ -42,6 +44,7 @@ function gallery () {
 					
 					var poster = document.createElement('div');
 					poster.className = "poster"+posts.category;
+					poster.id = "poster_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
 					poster.style.width = "98.5%";
 					poster.style.height = "auto";
 					poster.style.margin = "0 auto";
@@ -120,6 +123,46 @@ function gallery () {
 					warnings.innerHTML = "";
 					warnings.style.color = "#2a2d2d";
 					posterReactions.appendChild(warnings);
+					
+					if (userSession == posts.username || userSession == "TheCheerer") {
+						var deletePost = document.createElement('button');
+						deletePost.className = "deletePost";
+						deletePost.id = "delete_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+						if (userSession == posts.username) {
+							deletePost.innerHTML = "Click here if you want to delete your post.";
+						} else {
+							deletePost.innerHTML = "Click here if you want to delete this user's post.";
+						}
+						poster.appendChild(deletePost);
+						
+						var deleteDiv = document.createElement('div');
+						deleteDiv.className = "deleteContainer";
+						deleteDiv.id = "deleteDiv_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+						deleteDiv.style.display = 'none';
+						poster.appendChild(deleteDiv);
+						
+						var deleteAreYouSure = document.createElement('p');
+						deleteAreYouSure.className = "deleteSure";
+						deleteAreYouSure.innerHTML = "Are you sure you want to delete this post?";
+						deleteAreYouSure.style.color = "#2a2d2d";
+						deleteDiv.appendChild(deleteAreYouSure);
+						
+						var deleteButDiv = document.createElement('div');
+						deleteButDiv.className = "delButContain";
+						deleteDiv.appendChild(deleteButDiv);
+						
+						var deleteIt = document.createElement('button');
+						deleteIt.className = "deleteIt";
+						deleteIt.id = "deleteIt_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+						deleteIt.innerHTML = "Yes";
+						deleteButDiv.appendChild(deleteIt);
+						
+						var dontDeleteIt = document.createElement('button');
+						dontDeleteIt.className = "dontDeleteIt";
+						dontDeleteIt.id = "dont_"+posts.title+"_"+posts.fileExtension+"_"+posts.category+"_"+posts.username;
+						dontDeleteIt.innerHTML = "No!";
+						deleteButDiv.appendChild(dontDeleteIt);
+					}
 				}
 			}
 			var result = document.getElementById('result');
@@ -209,6 +252,71 @@ function gallery () {
 			dislikeButtons[v].addEventListener('click', reactToIt, false);
 		} 
 		/*End of AJAX call for proper work of Like buttons*/
+		
+		/*Warning when you click on delete button*/
+		var deletion = document.getElementsByClassName('deletePost');
+		
+		function doYouWantItDeleted (event) {
+			var it = event.currentTarget.id;
+			var itsDivId = it.replace("delete_", "deleteDiv_");
+			var itsDiv = document.getElementById(itsDivId);
+			itsDiv.style.display = 'block';
+		}
+		
+		for (var d = 0; d < deletion.length; d++) {
+			deletion[d].addEventListener('click', doYouWantItDeleted, false);
+		}
+		//What happens if you click 'NO!':
+		var rejectDeletion = document.getElementsByClassName('dontDeleteIt');
+		
+		for (var ind = 0; ind < rejectDeletion.length; ind++) {
+			rejectDeletion[ind].onclick = function() {refuseToDeleteIt(this)};
+		}
+		function refuseToDeleteIt(e) {
+		    var deleteDiv = document.getElementsByClassName('deleteContainer');
+		    for (var i = 0; i < deleteDiv.length; i++) {
+		    	deleteDiv[i].style.display = 'none';
+		    }
+		}
+		// Calling AJAX when you click Yes:
+		var deleteIt = document.getElementsByClassName('deleteIt');
+		
+		for (var ind = 0; ind < deleteIt.length; ind++) {
+			deleteIt[ind].onclick = function() {deleteThisPost(this.id)};
+		}
+		function deleteThisPost(e) {
+			if(typeof XMLHttpRequest !== 'undefined') xhttp2 = new XMLHttpRequest();
+			else {
+			   var versions = ["MSXML2.XmlHttp.5.0", 
+						        "MSXML2.XmlHttp.4.0",
+						        "MSXML2.XmlHttp.3.0", 
+						        "MSXML2.XmlHttp.2.0",
+						        "Microsoft.XmlHttp"]
+			
+			for(var i = 0; i < versions.length; i++) {
+			   try {
+			       xhttp2 = new ActiveXObject(versions[i]);
+			       break;
+			   }
+			   catch(e){}
+			} // end for
+			}
+			xhttp2.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					// successfuly received response
+					
+					var clickedId = e;
+					var delPosterId = clickedId.replace("deleteIt", "poster");
+					
+					var delThisPoster = document.getElementById(delPosterId);
+					delThisPoster.style.display = 'none';
+				}
+			}
+			
+			xhttp2.open("POST","./DeleteService.php",true);
+			xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp2.send("del="+e);
+		}
 	}
 	
 	xhttp.open("POST","./videosService.php",true);

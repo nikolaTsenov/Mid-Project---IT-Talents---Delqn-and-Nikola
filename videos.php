@@ -36,6 +36,7 @@ if(!$index) {
 		<div id="result">
 
 		</div>
+		
 	</main>
 
 	<aside id="rightAside"></aside>

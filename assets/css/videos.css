@@ -142,6 +142,56 @@
 #titleVideosLink img {
 	vertical-align: middle;
 }
+.deletePost {
+	display: block;
+	margin: 0 auto;
+	margin-top: 1.2em;
+	background-color: Transparent;
+    background-repeat: no-repeat;
+	cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: #202225;
+	border: none;
+	text-decoration: underline;
+}
+.deletePost:hover, .deletePost:active {
+	color: black;
+}
+.deleteContainer {
+	margin: 0 auto;
+}
+.deleteSure {
+	text-align: center;
+	padding: 1em;
+	color: #202225;
+}
+.delButContain {
+	text-align: center;
+	
+}
+.delButContain button {
+	display: inline-block;
+	margin: 0 auto;
+	margin-top: 0.5em;
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+	background-color: Transparent;
+    background-repeat: no-repeat;
+	cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: #202225;
+	border: 1px solid #202225;
+	border-radius: 10%;
+	font-size: 1em;
+	padding: 0.2em;
+}
+.delButContain button:hover, .delButContain button:active {
+	color: black;
+	border: 1.2px solid black;
+}
+
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 

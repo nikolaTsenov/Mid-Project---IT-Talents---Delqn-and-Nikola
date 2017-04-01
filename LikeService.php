@@ -28,9 +28,12 @@ if (isset ( $_POST ['tit'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 		} else {
 			$directory = './users/' . $titArray[4] . '/upload/' . $titArray[3] . '/' . $titArray[1] . 'Dislikes.txt';
 		}
-		
-		$reactionsHandle = fopen ( $directory,'a+' );
-		fclose($reactionsHandle);
+		try {
+			$reactionsHandle = fopen ( $directory,'a+' );
+		}
+		finally {
+			fclose($reactionsHandle);
+		}
 		// Check if the user has cleared his/her browser cache:
 		$posterReactorsFile = file_get_contents($directory);
 		$participateInReactors = false;
@@ -80,10 +83,6 @@ if (isset ( $_POST ['tit'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 			$fileGalleryArray = explode(PHP_EOL,$fileGallery);
 			array_pop($fileGalleryArray);
 			
-			// Opening a handle to remember the username of the user who has liked/disliked the post:
-			
-			$reactionsHandle = fopen ( $directory,'a+' );
-			
 			for($index = 0; $index < count ( $fileGalleryArray ); $index ++) {
 				$row = explode ( '#', $fileGalleryArray [$index] );
 				if ($row[2] == $titArray[1] . "." . $titArray[2]) {
@@ -93,14 +92,20 @@ if (isset ( $_POST ['tit'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 						} else {
 							$row[6]++;
 						}
-						//Remembering the username who has liked this file:
-						fwrite($reactionsHandle,$_SESSION ['username']);
-						fwrite($reactionsHandle,'#');
-						fclose($reactionsHandle);
+						// Opening a handle to remember the username of the user who has liked/disliked the post:
+						try {
+							$reactionsHandle = fopen ( $directory,'a+' );
+						
+							//Remembering the username who has liked this file:
+							fwrite($reactionsHandle,$_SESSION ['username']);
+							fwrite($reactionsHandle,'#');
+						}
+						finally {
+							fclose($reactionsHandle);
+						}
 					} 
 					if ($clearedBrowserCache || !$cookieFlag) {
-						fclose($reactionsHandle);
-						
+
 						//$posterReactorsFile = file_get_contents($directory);
 						$posterReactorsFileNewContent = str_replace($_SESSION ['username'] . "#", "", $posterReactorsFile);
 						file_put_contents($directory, $posterReactorsFileNewContent);

@@ -1,7 +1,7 @@
 <?php
 // da ne moje da se otvori linka direktno
 if(!$index) {
-	header('Location:/9gag/?page=upload');
+	header('Location:/7cheers/?page=upload');
 	die();
 }
 
@@ -12,8 +12,8 @@ $uploadFile = true; // flag - is this file allowed to be uploaded
 $fileSize = true; // flag - is this file the allowed size
 $emptyFile = false; // flag - is there any selected file
 
-$validTitle = false;
-$uniqueTitle = true;
+$validTitle = false; // flag - is the title valid
+$uniqueTitle = true; // flag - are there any other posts with the same title
 // Is 'Upload' Pressed:
 if (isset ( $_POST ['submit'] )) {
 	
@@ -114,29 +114,42 @@ if (isset ( $_POST ['submit'] )) {
 					//move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
 					if (move_uploaded_file ( $fileOnServerName, './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $newfilename )) {
 						$checkSuccessfulUpload = true;
-						
-						$commentsHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Comments.txt','a+' );
-						
-						fclose($commentsHandle);
-						
-						$galleryHandle = fopen('users/gallery.txt','a+');
-						
-						fwrite($galleryHandle,$_SESSION ['username']);
-						fwrite($galleryHandle,'#');
-						fwrite($galleryHandle,$fileTitle);
-						fwrite($galleryHandle,'#');
-						fwrite($galleryHandle,$newfilename);
-						fwrite($galleryHandle,'#');
-						fwrite($galleryHandle,end($temporary));
-						fwrite($galleryHandle,'#');
-						fwrite($galleryHandle,$category);
-						fwrite($galleryHandle,'#');
-						fwrite($galleryHandle,'0');
-						fwrite($galleryHandle,'#');
-						fwrite($galleryHandle,'0');
-						fwrite($galleryHandle,PHP_EOL);
-						
-						fclose($galleryHandle);
+						try {
+							// Create file for comments
+							$commentsHandle = fopen ( './users/' . $_SESSION ['username'] . '/upload/' . $category . '/' . $fileTitle . 'Comments.txt','a+' );
+						}
+						catch (Exception $e) {
+							throw new Exception ( "Something went wrong with the handle.", $e );
+						}
+						finally {
+							fclose($commentsHandle);
+						}
+						try {
+							// Add to gallery file the Uploader's username, the title, the entire filename, the extension(format),
+							// and the beginning count of likes and dislikes:
+							$galleryHandle = fopen('users/gallery.txt','a+');
+							
+							fwrite($galleryHandle,$_SESSION ['username']);
+							fwrite($galleryHandle,'#');
+							fwrite($galleryHandle,$fileTitle);
+							fwrite($galleryHandle,'#');
+							fwrite($galleryHandle,$newfilename);
+							fwrite($galleryHandle,'#');
+							fwrite($galleryHandle,end($temporary));
+							fwrite($galleryHandle,'#');
+							fwrite($galleryHandle,$category);
+							fwrite($galleryHandle,'#');
+							fwrite($galleryHandle,'0');
+							fwrite($galleryHandle,'#');
+							fwrite($galleryHandle,'0');
+							fwrite($galleryHandle,PHP_EOL);
+						}
+						catch (Exception $e) {
+							throw new Exception ( "Something went wrong.", $e );
+						}
+						finally {
+							fclose($galleryHandle);
+						}
 					} else {
 						$successfulUpload = false;
 					}
