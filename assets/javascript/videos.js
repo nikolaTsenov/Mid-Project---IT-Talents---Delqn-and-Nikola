@@ -25,10 +25,22 @@ function gallery () {
 			var output = document.createElement('div');
 			output.className = "posters";
 			output.innerHTML = "";
+			// Get the current page:
+			var currentPage = document.getElementById('anchor2').innerHTML;
+			var currentPageValue = currentPage.valueOf() - 1;
+			// Set posts counter:
+			var countPosts = 0;
 			
-			for (var index=0; index < data.length; index++) {
+			for (var index=currentPageValue; index < data.length; index++) {
+				
 				var posts = data[index];
 				if (posts.fileExtension == "mp4") {
+					/*Don't allow more tan 10 posts on single page:*/
+					countPosts++;
+					if (countPosts > 10) {
+						break;
+					}
+					
 					// get the category of the posts:
 					var cat;
 					var categs = new Array("balkan", "engHum", "memes", "awkward", "blackHum");
@@ -310,6 +322,8 @@ function gallery () {
 					
 					var delThisPoster = document.getElementById(delPosterId);
 					delThisPoster.style.display = 'none';
+					// reolad the page to re-order the paging:
+					window.location.reload(true);
 				}
 			}
 			
@@ -321,7 +335,7 @@ function gallery () {
 	
 	xhttp.open("POST","./videosService.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send();	
+	xhttp.send("type=video");	
 }
 /*End of AJAX call for loading allvideos*/
 

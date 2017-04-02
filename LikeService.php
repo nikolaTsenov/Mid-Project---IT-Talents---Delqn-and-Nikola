@@ -78,7 +78,14 @@ if (isset ( $_POST ['tit'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 				$cookieFlag = false;
 			}
 			// Increasing/Decreasing the value of likes/dislikes serverside:
-			$fileGallery = file_get_contents ( "./users/gallery.txt" );
+			if ($titArray[2] == "mp4") {
+				$pathString = "./users/videoteka.txt";
+			} elseif ($titArray[2] == "gif") {
+				$pathString = "./users/gifoteka.txt";
+			} else {
+				$pathString = "./users/gallery.txt";
+			}
+			$fileGallery = file_get_contents ( $pathString );
 			
 			$fileGalleryArray = explode(PHP_EOL,$fileGallery);
 			array_pop($fileGalleryArray);
@@ -130,7 +137,8 @@ if (isset ( $_POST ['tit'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 			$newFileGallery = implode(PHP_EOL,$fileGalleryArray);
 			//echo $newFileGallery;
 			$newFileGallery .= PHP_EOL;
-			file_put_contents("./users/gallery.txt", $newFileGallery);
+			
+			file_put_contents($pathString, $newFileGallery);
 			
 		}
 	}

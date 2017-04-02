@@ -51,7 +51,13 @@ if (isset ( $_POST ['submit'] )) {
 			}
 			// Is the title unique for the whole format:
 			if ($uniqueTitle) {
-				$filePath= "./users/gallery.txt";
+				if ($imageFileType == "mp4") {
+					$filePath= "./users/videoteka.txt";
+				} elseif ($imageFileType == "gif") {
+					$filePath= "./users/gifoteka.txt";
+				} else {
+					$filePath= "./users/gallery.txt";
+				}
 				$currentGallery = file_get_contents($filePath);
 				
 				$currentGallery = explode(PHP_EOL,$currentGallery);
@@ -127,7 +133,13 @@ if (isset ( $_POST ['submit'] )) {
 						try {
 							// Add to gallery file the Uploader's username, the title, the entire filename, the extension(format),
 							// and the beginning count of likes and dislikes:
-							$galleryHandle = fopen('users/gallery.txt','a+');
+							if ($imageFileType == "mp4") {
+								$galleryHandle = fopen('users/videoteka.txt','a+');
+							} elseif ($imageFileType == "gif") {
+								$galleryHandle = fopen('users/gifoteka.txt','a+');
+							} else {
+								$galleryHandle = fopen('users/gallery.txt','a+');
+							}
 							
 							fwrite($galleryHandle,$_SESSION ['username']);
 							fwrite($galleryHandle,'#');

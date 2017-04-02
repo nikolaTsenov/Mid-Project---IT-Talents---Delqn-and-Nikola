@@ -2,11 +2,18 @@
 if (isset ( $_POST ['del'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	// get the AJAX parameter:
 	$del = trim(htmlentities($_POST ['del']));
-	// get the content of gallery.txt in form of array:
-	$galleryContent = file("./users/gallery.txt");
 	// explode the id of the requested for deletion post to get the valuable info:
 	$delArr = explode("_",$del);
 	//var_dump($delArr); - 0:notImportant; 1:filename; 2:fileExt; 3:category; 4:user;
+	// get the content of gallery.txt in form of array:
+	if ($delArr[2] == "mp4") {
+		$pathToFile = "./users/videoteka.txt";
+	} elseif ($delArr[2] == "gif") {
+		$pathToFile = "./users/gifoteka.txt";
+	} else {
+		$pathToFile = "./users/gallery.txt";
+	}
+	$galleryContent = file($pathToFile);
 	// Setting the requested line for deletion:
 	$delSearchString = $delArr[4] . "#" . $delArr[1] . "#" . $delArr[1] . "." . $delArr[2] . "#" . $delArr[2] . "#" . $delArr[3];
 	$delStrLen = mb_strlen($delSearchString,"UTF-8");
@@ -20,7 +27,7 @@ if (isset ( $_POST ['del'] ) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 	}
 	// Put the new content in the file:
-	file_put_contents("./users/gallery.txt", $galleryContent);
+	file_put_contents($pathToFile, $galleryContent);
 	
 	// Delete the graphic content from the server:
 	$directory1 = "./users/" . $delArr[4] . "/upload/" . $delArr[3] . "/" . $delArr[1] . "." . $delArr[2];

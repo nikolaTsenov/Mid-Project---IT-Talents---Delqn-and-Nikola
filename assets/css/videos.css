@@ -192,6 +192,23 @@
 	border: 1.2px solid black;
 }
 
+/*Paging UL*/
+#pages {
+	margin: 0 auto;
+	text-align: center;
+}
+#pages li {
+	display: inline;
+	padding: 0.5em;
+}
+#pages li a {
+	width: 100%;
+	color: #085be0;
+}
+#pages li a:hover, #pages li a:active {
+	color: #003387;
+	text-decoration: underline;
+}
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
