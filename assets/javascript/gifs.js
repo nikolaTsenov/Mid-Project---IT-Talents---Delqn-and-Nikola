@@ -34,7 +34,7 @@ function gallery () {
 			for (var index=currentPageValue; index < data.length; index++) {
 				
 				var posts = data[index];
-				if (posts.fileExtension == "mp4") {
+
 					/*Don't allow more tan 10 posts on single page:*/
 					countPosts++;
 					if (countPosts > 10) {
@@ -85,10 +85,9 @@ function gallery () {
 					posterContainer.innerHTML = "";
 					poster.appendChild(posterContainer);
 					
-					var posterContent = document.createElement('video');
+					var posterContent = document.createElement('img');
 					posterContent.className = "posterGraphic";
 					posterContent.src = "./users/"+posts.username+"/upload/"+posts.category+"/"+posts.fileName;
-					posterContent.controls = true;
 					posterContainer.appendChild(posterContent);	
 		
 					var posterReactions = document.createElement('div');
@@ -182,7 +181,7 @@ function gallery () {
 						dontDeleteIt.innerHTML = "No!";
 						deleteButDiv.appendChild(dontDeleteIt);
 					}
-				}
+				
 			}
 			var result = document.getElementById('result');
 			result.appendChild(output);
@@ -342,7 +341,7 @@ function gallery () {
 	
 	xhttp.open("POST","./videosService.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("type=video");	
+	xhttp.send("type=gif");	
 }
 /*End of AJAX call for loading allvideos*/
 

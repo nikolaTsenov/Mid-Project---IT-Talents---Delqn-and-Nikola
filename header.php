@@ -6,6 +6,7 @@
 <meta http-equiv="author" name="Nikola Tsenov, Delqn Kolev" />
 <title>7cheers</title>
 <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./assets/css/post.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/videos.css" type="text/css" />
 <link rel="stylesheet" href="./assets/css/upload.css" type="text/css" />
 <link rel="stylesheet" href="./assets/font-awesome-4.7.0/css/font-awesome.min.css"/>
