@@ -28,6 +28,19 @@ function getMessages() {
 function clearMessages() {
 	$_SESSION['messages'] = array();
 }
+function randSmileMsgGenerator () {
+	$array = array('Laughter is free!',
+			'Laughter is the best medicine!',
+			'Meet every day with a big smile!',
+			'Make the world smile!',
+			'Free smiles for everyone!',
+			'Be happy!',
+			'Regular laughter leads to long live!'
+	);
+	$rand = rand(0,(count($array)-1));
+	echo $array[$rand];
+	return;
+}
  function myErrorHandler($errNumber,$errMsg) {
 	if ($errNumber == E_WARNING || $errNumber == E_NOTICE) {
 		echo "<p id='warningNotice'>Sth went slightly out of the true path.</p>";

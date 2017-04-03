@@ -177,7 +177,7 @@ if (isset ( $_POST ['submit'] )) {
 
 
 ?>
-<h2 id="titleUploadLink">Make the world smile <img src="./assets/images/uploadForm/bigSmile2.png" alt="Big Smile" align="middle" /></h2>
+<h2 id="titleUploadLink"><?php randSmileMsgGenerator (); ?> <img src="./assets/images/uploadForm/bigSmile2.png" alt="Big Smile" align="middle" /></h2>
 <div id="uploadFormIntro">
 	<p class="helloUpload">Hello, <?php if (isset ( $_SESSION ['username'] )) { echo $_SESSION ['username']; } else { echo "Dear Guest"; } ?>! If you enjoy posts like this one:</p>
 	<div id="bearContainer"><img src="./assets/images/uploadForm/hiBear.gif" alt="Bear says 'Hi'" /></div>

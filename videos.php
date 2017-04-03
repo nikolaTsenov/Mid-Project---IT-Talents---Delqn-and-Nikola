@@ -20,7 +20,7 @@ if(!$index) {
 
 	<main id="mainContent">
 		<div id="contentMenu">
-			<h2 id="titleVideosLink">Meet every day with a big smile! <img src="./assets/images/uploadForm/bigSmile2.png" alt="Big Smile" align="middle" /></h2>
+			<h2 id="titleVideosLink"><?php randSmileMsgGenerator (); ?> <img src="./assets/images/uploadForm/bigSmile2.png" alt="Big Smile" align="middle" /></h2>
 			<p id="showHideSelector" >Select the categories you want to see:</p>
 			<form action="" id="watchForm1">
 							<div class="rounded"><input type="checkbox" name="category" value="balkan" class="category" id="balkan" checked="checked" /><label for="balkan">Balkan Humour</label></div>
