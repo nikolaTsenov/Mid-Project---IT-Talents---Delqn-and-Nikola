@@ -209,7 +209,13 @@
 	color: #003387;
 	text-decoration: underline;
 }
-
+.reactionsLink {
+	display: block;
+	margin-top: 1em;
+}
+.reactionsLink:hover, .reactionsLink:active {
+	text-decoration: underline;
+}
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 /*** custom checkboxes ***/

@@ -195,7 +195,9 @@ p#categoryForFiles {
 #warningUpload, #appendTitleWarning {
 	color: red;
 }
-
+#succTalk {
+	color: green;
+}
 /* Button for Upload: */
 
 .file-drop-area {

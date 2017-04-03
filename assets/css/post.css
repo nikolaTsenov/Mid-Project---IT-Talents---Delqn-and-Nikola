@@ -1,0 +1,210 @@
+@CHARSET "UTF-8";
+
+#theLeft {
+	width: 15%;
+	height: auto;
+	float: left;
+	
+}
+#postContain {
+	width: 50%;
+	display: inline-block;
+}
+#theRight {
+	width: 35%;
+	height: auto;
+	float: right;
+	padding-top: 10em;
+}
+#advert {
+	color: #d83504;
+	font-weight: bold;
+	font-size: 1.2em;
+	padding: 1em;
+}
+#advert a {
+	color: #d83504;
+}
+#advert a:hover, #advert a:active {
+	text-decoration: underline;
+}
+#postTit {
+	width: 100%;
+	text-align: center;
+}
+#postTit h4 {
+	font-weight: bolder;
+	font-size: 2em;
+	color: #202225;
+}
+#postTit h6 {
+	font-weight: bolder;
+	font-size: 0.8em;
+	color: #d83504;
+	padding-bottom: 1em;
+	padding-top: 1em;
+}
+#postTit div {
+	display: inline-block;
+	width: 100px;
+	vertical-align: center;
+	padding-bottom: 1em;
+}
+#postTit div img {
+	width: 100%;
+	border-radius: 60%;
+}
+#postContain video {
+	max-height: 30em;
+	background-color: lightGrey;
+}
+#postContain img {
+	max-height: 30em;
+	width: 100%;
+}
+#postComments {
+	width: 100%;
+}
+#postComments form {
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 0.3em;
+}
+#postComments form textarea {
+	width: 100%;
+	border: 1px solid #202225;
+	background-color: #f2f4f7;
+}
+#submitComment {
+	height: 2.2em;
+	font-size: 1em;
+	padding: 0.3em;
+	background-color: #f2f3f4;
+    background-repeat: no-repeat;
+	cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: darkGreen;
+	border: 1px solid #202225;
+	border-radius: 10%;
+	width: 5em;
+}
+#commented {
+	width: 100%;
+	margin-top: 1em;
+}
+.comDiv {
+	width: 98%;
+	margin: 0 auto;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #eff0f2;
+	display: inline-block;
+}
+.imgDiv {
+	width: 100px;
+	height: auto;
+	float: left;
+}
+.comDiv p {
+	display: inline-block;
+	width: 70%;
+	padding-top: 10px;
+	word-wrap: break-word;
+}
+.comDiv .imgDiv img {
+	width: 100%;
+	height: auto;
+	border-radius: 30%;
+}
+.comDiv button {
+	display: inline-block;
+}
+.deleteButton {
+	height: 2em;
+	font-size: 0.8em;
+	padding: 0.3em;
+	background-color: Transparent;
+    background-repeat: no-repeat;
+	cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: #202225;
+	border: 1px solid #202225;
+	border-radius: 10%;
+	width: 4em;
+}
+.deleteButton:hover, .deleteButton:active {
+	border: 1.5px solid black;
+	color: black;
+	font-weight: bold;
+}
+/* right aside:*/
+#wholikedIt {
+	padding: 1.2em;
+	word-wrap: break-word;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: darkGreen;
+}
+#likers {
+	width: 100%;
+	border-bottom: 1px solid #eff0f2;
+}
+#likers p {
+	float: right;
+	margin-right: 20%;
+	color: green;
+	padding-top: 1em;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#liker {
+	width: 30%;
+	display: inline-block;
+}
+#liker img {
+	width: 100%;
+	border-radius: 50%;
+}
+#whodislikedIt {
+	padding: 1.2em;
+	word-wrap: break-word;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: darkRed;
+}
+#dislikers {
+	width: 100%;
+	border-bottom: 1px solid #eff0f2;
+}
+#dislikers p {
+	float: right;
+	margin-right: 20%;
+	color: red;
+	padding-top: 1em;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#disliker {
+	width: 30%;
+	display: inline-block;
+}
+#disliker img {
+	width: 100%;
+	border-radius: 50%;
+}
+#notYetdisLiked {
+	padding: 1.2em;
+	word-wrap: break-word;
+	font-size: 1em;
+	font-weight: bold;
+	color: darkRed;
+}
+#notYetLiked {
+	padding: 1.2em;
+	word-wrap: break-word;
+	font-size: 1em;
+	font-weight: bold;
+	color: darkGreen;
+}
